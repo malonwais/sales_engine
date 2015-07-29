@@ -8,8 +8,8 @@ class ItemRepo < Repo
   end
 
   def merchant(item_id)
-    @se.merchant_repo.table.select do |merchant|
+    @se.merchant_repo.table.find do |merchant|
       find_by(:id, item_id).merchant_id == merchant.id
-    end.first
+    end
   end
 end

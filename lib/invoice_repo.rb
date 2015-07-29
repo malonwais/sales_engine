@@ -23,15 +23,15 @@ class InvoiceRepo < Repo
   end
 
   def customer(invoice_id)
-    @se.customer_repo.table.select do |customer|
+    @se.customer_repo.table.find do |customer|
       find_by(:id, invoice_id).customer_id == customer.id
-    end.first
+    end
   end
 
   def merchant(invoice_id)
-    @se.merchant_repo.table.select do |merchant|
+    @se.merchant_repo.table.find do |merchant|
       find_by(:id, invoice_id).merchant_id == merchant.id
-    end.first
+    end
   end
 
 end

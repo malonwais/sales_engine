@@ -28,7 +28,9 @@ class Repo
   end
 
   def find_by(symbol, hunt)
-    find_all_by(symbol, hunt).first
+    self.table.find do |thing|
+      thing.send(symbol) == hunt
+    end
   end
 
   def find_all_by(symbol, hunt)
