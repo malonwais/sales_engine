@@ -1,6 +1,6 @@
 require_relative 'repo'
 require_relative 'merchant'
-class MerchantsRepo < Repo
+class MerchantRepo < Repo
 
   def items(merchant_id)
     @se.item_repo.table.select do |item|

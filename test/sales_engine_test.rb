@@ -1,4 +1,4 @@
-require './test_helper'
+require_relative 'test_helper'
 
 
 class SalesEngineTest < MiniTest::Test
@@ -9,11 +9,11 @@ class SalesEngineTest < MiniTest::Test
     assert_equal CustomerRepo, engine.customer_repo.class
     assert_equal InvoiceRepo, engine.invoice_repo.class
     assert_equal TransactionRepo, engine.transaction_repo.class
-    assert_equal InvoiceItemsRepo, engine.invoice_items_repo.class
-    assert_equal MerchantsRepo, engine.merchants_repo.class
-    assert_equal ItemsRepo, engine.items_repo.class
+    assert_equal InvoiceItemRepo, engine.invoice_item_repo.class
+    assert_equal MerchantRepo, engine.merchant_repo.class
+    assert_equal ItemRepo, engine.item_repo.class
     assert_equal engine, engine.customer_repo.se
-    assert_equal engine, engine.merchants_repo.se
+    assert_equal engine, engine.merchant_repo.se
   end
 
 end

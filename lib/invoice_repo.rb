@@ -22,27 +22,15 @@ class InvoiceRepo < Repo
     end
   end
 
-  def customer_id(invoice_id)
-    self.table.select do |invoice|
-      invoice.id == invoice_id
-    end.first.customer_id
-  end
-
   def customer(invoice_id)
     @se.customer_repo.table.select do |customer|
-      customer_id(invoice_id) == customer.id
+      find_by_id(invoice_id).customer_id == customer.id
     end.first
-  end
-
-  def merchant_id(invoice_id)
-    self.table.select do |invoice|
-      invoice.id == invoice_id
-    end.first.merchant_id
   end
 
   def merchant(invoice_id)
     @se.merchant_repo.table.select do |merchant|
-      merchant_id(invoice_id) == merchant.id
+      find_by_id(invoice_id).merchant_id == merchant.id
     end.first
   end
 
