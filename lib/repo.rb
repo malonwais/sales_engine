@@ -45,12 +45,6 @@ class Repo
     @table.sample
   end
 
-  def find_by_id(id)
-    self.table.select do |thing|
-      thing.id == id
-    end.first
-  end
-
   def find_by(symbol, hunt)
     find_all_by(symbol, hunt).first
   end

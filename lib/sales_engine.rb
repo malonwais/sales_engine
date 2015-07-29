@@ -24,7 +24,3 @@ class SalesEngine
   end
 
 end
-
-#
-# engine = SalesEngine.new
-# engine.startup
