@@ -39,4 +39,8 @@ class Repo
     end
   end
 
+  def repo_table(symbol_thing)
+    @se.send(symbol_thing).table
+  end
+
 end

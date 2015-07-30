@@ -5,12 +5,13 @@ require_relative 'invoice_item_repo'
 require_relative 'merchant_repo'
 require_relative 'item_repo'
 require_relative 'repo'
+require_relative 'merchant_repo_intel'
 
 class SalesEngine
   attr_reader :customer_repo, :invoice_repo, :transaction_repo,
     :invoice_item_repo, :merchant_repo, :item_repo
 
-  def startup
+  def repo_startup
     @customer_repo = CustomerRepo.new(self)
     @invoice_repo = InvoiceRepo.new(self)
     @transaction_repo = TransactionRepo.new(self)
@@ -19,7 +20,16 @@ class SalesEngine
     @item_repo = ItemRepo.new(self)
   end
 
-  def map_all_data
+  def intel_startup
+    MerchantRepoIntel.new(self)
+  end
+
+  def startup
+    repo_startup
+    intel_startup
+  end
+
+  def imports_all_data #imports all data files
 
   end
 
