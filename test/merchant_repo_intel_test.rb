@@ -12,7 +12,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_group_invoices_by_merchant
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
     result = intel.group_invoices_with_merchant['44']
 
@@ -22,7 +21,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_group_merchant_with_invoice_id
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
     int = intel.group_invoices_with_merchant
     result = intel.group_merchant_with_invoice_ids(int)
@@ -34,7 +32,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_group_invoice_items_by_merchant
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
     intel = MerchantRepoIntel.new(engine)
     result = intel.group_invoice_items_with_invoice['2']
 
@@ -67,7 +64,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_find_total_inv_item_prices_for_an_invoice
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
     intel = MerchantRepoIntel.new(engine)
     inv_items = intel.group_invoice_items_with_invoice
     result = intel.inv_to_inv_item_prices(inv_items)
@@ -78,7 +74,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_find_total_invoice_price
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
     intel = MerchantRepoIntel.new(engine)
     inv_items = intel.group_invoice_items_with_invoice
     sep_prices = intel.inv_to_inv_item_prices(inv_items)
@@ -90,8 +85,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_map_merch_to_invoice_prices
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
 
     inv_items = intel.group_invoice_items_with_invoice
@@ -107,8 +100,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_find_total_spend_per_merchant
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
 
     inv_items = intel.group_invoice_items_with_invoice
@@ -126,8 +117,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_find_top_x_merch_by_revenue
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
 
     result = intel.most_revenue(2)
@@ -148,8 +137,6 @@ class MerchantRepoIntelTest < MiniTest::Test
   def test_can_map_inv_item_quantities_to_invoice_id
     engine = SalesEngine.new
     engine.startup
-    engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-    engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
     intel = MerchantRepoIntel.new(engine)
 
     inv_items = intel.group_invoice_items_with_invoice

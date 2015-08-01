@@ -2,11 +2,15 @@ require_relative 'repo'
 require_relative 'customer'
 
 class CustomerRepo < Repo
+  attr_reader :se, :table
 
-  def invoices(customer_id)
-    repo_table(:invoice_repo).select do |invoice|
-      invoice.customer_id == customer_id
-    end
+  def initialize(sales_engine)
+    @se = sales_engine
+    @table = []
+    map_data(Customer,'./data/customers.csv')
   end
+
+
+
 
 end

@@ -1,17 +1,15 @@
 require_relative 'repo'
 require_relative 'invoice_item'
+
 class InvoiceItemRepo < Repo
+  attr_reader :se, :table
 
-  def invoice(id)
-    repo_table(:invoice_repo).find do |invoice|
-      find_by(:id, id).invoice_id == invoice.id
-    end
+  def initialize(sales_engine)
+    @se = sales_engine
+    @table = []
+    map_data(InvoiceItem,'./data/invoice_items.csv')
   end
 
-  def item(id)
-    repo_table(:item_repo).find do |item|
-      find_by(:id, id).item_id == item.id
-    end
-  end
+
 
 end

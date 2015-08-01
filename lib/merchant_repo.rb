@@ -2,16 +2,12 @@ require_relative 'repo'
 require_relative 'merchant'
 class MerchantRepo < Repo
 
-  def items(merchant_id)
-    repo_table(:item_repo).select do |item|
-      item.merchant_id == merchant_id
-    end
-  end
+  attr_reader :se, :table
 
-  def invoices(merchant_id)
-    repo_table(:invoice_repo).select do |invoice|
-      invoice.merchant_id == merchant_id
-    end
+  def initialize(sales_engine)
+    @se = sales_engine
+    @table = []
+    map_data(Merchant,'./data/merchants.csv')
   end
 
 end

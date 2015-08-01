@@ -26,7 +26,7 @@ class SalesEngine
 
   def startup
     repo_startup
-    intel_startup
+    # intel_startup
   end
 
   def imports_all_data #imports all data files

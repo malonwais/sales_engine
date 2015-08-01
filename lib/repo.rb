@@ -1,12 +1,7 @@
 require_relative 'file_io'
 
 class Repo
-  attr_reader :se, :table
-
-  def initialize(sales_engine)
-    @se = sales_engine
-    @table = []
-  end
+  # attr_reader :table
 
   def input_data(file_name)
     FileIO.new(file_name).input_data
@@ -14,7 +9,7 @@ class Repo
 
   def map_data(child_class, file_name)
     input_data(file_name).each do |object_data|
-      @table << child_class.new(object_data)
+      @table << child_class.new(object_data, self)
     end
     @table.shift #removes header info
   end
