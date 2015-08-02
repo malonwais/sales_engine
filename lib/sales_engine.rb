@@ -29,12 +29,8 @@ class SalesEngine
     # intel_startup
   end
 
-  def imports_all_data #imports all data files
-
-  end
-
 end
 
 engine = SalesEngine.new()
 engine.startup
-
+require 'pry';binding.pry

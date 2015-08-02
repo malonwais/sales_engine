@@ -11,23 +11,49 @@ class MerchantRepo < Repo
   end
 
   def most_revenue(merchant_count)
-    ranked_merchants = revenue_by_merchant.sort_by do
-      |merchant, revenue| revenue
-    end
-    ranked_merchants.reverse!
+    ranked_merchants = revenue_list.sort_by do |merchant, revenue|
+      revenue
+    end.reverse!
     ranked_merchants[0..merchant_count - 1].map do |merchant_rank|
       merchant_rank.first
       # [merchant_rank.first.id,  merchant_rank.last]
     end
   end
 
-  def revenue_by_merchant
+  def most_items(merchant_count)
+    puts "started"
+    ranked_merchants = quantity_sold_list.sort_by do |merchant, quantity|
+      quantity
+    end.reverse!
+    puts "middle"
+    ranked_merchants[0..merchant_count - 1].map do |merchant_rank|
+      merchant_rank.first
+    end
+    puts "ended"
+  end
+
+  def revenue_list
     grouped_revenue = Hash.new(0)
     se.invoice_item_repo.all.each do |invoice_item|
       grouped_revenue[invoice_item.merchant] += invoice_item.revenue
     end
     grouped_revenue
   end
+
+  def quantity_sold_list
+    grouped_quantity_sold = Hash.new(0)
+  	se.invoice_item_repo.all.each do |invoice_item|
+      invoice_id = invoice_item.invoice_id
+      transaction = se.transaction_repo.find_by(:invoice_id, invoice_id)
+      merchant = invoice_item.merchant
+      quantity = invoice_item.quantity
+      grouped_quantity_sold[merchant] += quantity.to_i if transaction.successful?
+      p [merchant.id, grouped_quantity_sold[merchant]]
+    end
+    grouped_quantity_sold
+  end
+
+
 
 
 
