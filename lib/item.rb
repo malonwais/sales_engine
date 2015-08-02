@@ -26,5 +26,13 @@ class Item
       merchant_id == merchant.id
     end
   end
-
+  def best_day(invoice_date)
+    
+    #from the item we have to get to invoice items i think
+    
+    #I still have to detect only successful transactions
+  end
+  def get_invoice_item_quantity
+    0
+  end
 end

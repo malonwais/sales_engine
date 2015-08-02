@@ -45,6 +45,14 @@ class ItemRepoTest < MiniTest::Test
       assert_equal "8", item.merchant.id
       assert_equal "Osinski, Pollich and Koelpin", item.merchant.name
     end
+    def test_get_invoice_item_quantity_it_returns_0_if_item_doesnt_exist
+      
+      input_data = ['091820193','hi','this is','234245', '23423424','2342342342','232523525']
+      item = Item.new(input_data, engine.item_repo)
+      
+      assert_equal(0, item.get_invoice_item_quantity)
+      
+    end
 
 
 
