@@ -1,5 +1,5 @@
 require 'rake/testtask'
-require 'simplecov'
+# require 'simplecov'
 
 task default: %w[test]
 Rake::TestTask.new do |t|
