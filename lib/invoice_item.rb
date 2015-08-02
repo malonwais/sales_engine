@@ -29,25 +29,21 @@ class InvoiceItem
   end
 
   def revenue
-    transaction_repo = invoice_item_repository.se.transaction_repo
-    transaction = transaction_repo.find_by(:invoice_id, invoice_id)
-    if !transaction.nil? && transaction.successful?
-      quantity.to_i * unit_price.to_i
-    else
-      0
-    end
+    if successful? then quantity.to_i * unit_price.to_i else 0 end
   end
 
   def merchant
     item_repo = invoice_item_repository.se.item_repo
     merchant = item_repo.find_by(:id, item_id).merchant
-    #  puts merchant.id
+
     merchant
   end
-  
+
   def successful?
     transaction_repo = invoice_item_repository.se.transaction_repo
-    transaction_repo.find_by(:invoice_id, invoice_id).successful?
+    transaction = transaction_repo.find_by(:invoice_id, invoice_id)
+
+    !transaction.nil? && transaction.successful?
   end
 
 end
