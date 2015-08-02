@@ -22,6 +22,9 @@ class TransactionRepoTest < MiniTest::Test
       assert_equal '4', transaction.invoice.id
       assert_equal '33', transaction.invoice.merchant_id
     end
+    def test_sucess__it_true_when_a_given_transaction_is_sucessful
+      
+    end
 
 
 

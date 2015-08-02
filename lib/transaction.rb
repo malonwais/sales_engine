@@ -1,8 +1,8 @@
 class Transaction
   attr_reader :id, :invoice_id, :credit_card_number,
-              :credit_card_expiration_date,
-              :result, :created_at, :updated_at,
-              :transaction_repository
+  :credit_card_expiration_date,
+  :result, :created_at, :updated_at,
+  :transaction_repository
 
   def initialize(input_data, transaction_repository)
     @id = input_data[0]
@@ -21,9 +21,16 @@ class Transaction
     #   find_by(:id, transaction_id).invoice_id == invoice.id
     # end
   end
-
   def successful?
-  	result == "success" || transaction_repository.find_all_by(:invoice_id, invoice_id).any? { |transaction| transaction.result == "success" }
+    if
+      result == "success"
+    else
+      repo = transaction_repository
+      other_transactions = repo.find_all_by(:invoice_id, invoice_id)
+      other_transactions.any? do |transaction|
+        transaction.result == "success"
+      end
+    end
   end
 
 end
