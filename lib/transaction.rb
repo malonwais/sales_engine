@@ -22,4 +22,8 @@ class Transaction
     # end
   end
 
+  def successful?
+  	result == "success" || transaction_repository.find_all_by(:invoice_id, invoice_id).any? { |transaction| transaction.result == "success" }
+  end
+
 end
