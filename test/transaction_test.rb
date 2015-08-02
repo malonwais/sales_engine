@@ -1,4 +1,5 @@
 require_relative 'test_helper'
+require_relative '../lib/transaction'
 
 class TransactionRepoTest < MiniTest::Test
 
@@ -22,7 +23,20 @@ class TransactionRepoTest < MiniTest::Test
       assert_equal '4', transaction.invoice.id
       assert_equal '33', transaction.invoice.merchant_id
     end
-    def test_sucess__it_true_when_a_given_transaction_is_sucessful
+    def test_success__it_returns_true_when_a_given_transaction_is_sucessful
+      
+      input_data =['1', '2', '9381938102', "1918", 'success', '08071902', '01929382']
+      transaction = Transaction.new(input_data, engine.transaction_repo)
+      
+      assert transaction.successful?
+      
+    end
+    def test_sucess__it_returns_false_when_a_given_transaction_is_unsuccessful
+      #give invoice id that coudln't possibly exist elsewhere
+      input_data =['1', '2342352352352', '9381938102', "1918", 'failed', '08071902', '01929382']
+      transaction = Transaction.new(input_data, engine.transaction_repo)
+      
+      assert_equal(false, transaction.successful?)
       
     end
 

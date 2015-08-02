@@ -22,8 +22,8 @@ class Transaction
     # end
   end
   def successful?
-    if
-      result == "success"
+    if result == "success"
+      true
     else
       repo = transaction_repository
       other_transactions = repo.find_all_by(:invoice_id, invoice_id)
