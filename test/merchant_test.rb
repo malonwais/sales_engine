@@ -27,7 +27,9 @@ class MerchantRepoTest < MiniTest::Test
     end
 
     def test_items__it_returns_an_empty_array_when_no_items_are_associated_with_the_merchant
-      merchant = engine.merchant_repo.find_by(:id, '50')
+    
+      input_data = ['234sdg', 'hi','9234','492fs']
+      merchant = Merchant.new(input_data, engine.merchant_repo)
 
       assert_equal [], merchant.items
     end
@@ -44,12 +46,13 @@ class MerchantRepoTest < MiniTest::Test
       invoice_ids = merchant.invoices.map {|invoice| invoice.id}
       customer_ids = merchant.invoices.map {|invoice| invoice.customer_id}
 
-      assert_equal ['146', '178', '406', '508', '763'], invoice_ids
-      assert_equal ['28', '37', '84', '107', '149'], customer_ids
+      assert_equal ['146', '178', '406', '508', '763'], invoice_ids[0..4]
+      assert_equal ['28', '37', '84', '107', '149'], customer_ids[0..4]
     end
 
     def test_invoices__it_returns_an_empty_array_when_no_invoices_are_associated_with_the_merchant
-      merchant = engine.merchant_repo.find_by(:id, '101')
+      input_data = ['234sdg', 'hi','9234','492fs']
+      merchant = Merchant.new(input_data, engine.merchant_repo)
 
       assert_equal [], merchant.invoices
     end

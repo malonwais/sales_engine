@@ -44,13 +44,6 @@ class RepoTest < MiniTest::Test
     assert_equal Item, repo.table[1].class
   end
 
-  def test_it_will_return_all_in_table
-    engine = SalesEngine.new
-    repo = ItemRepo.new(engine)
-
-    assert_equal 1000, repo.all.size
-  end
-
   def test_it_returns_a_random_entry
     engine = SalesEngine.new
     repo = ItemRepo.new(engine)

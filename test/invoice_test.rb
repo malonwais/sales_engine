@@ -26,7 +26,9 @@ class InvoiceRepoTest < MiniTest::Test
     end
 
     def test_transactions__it_returns_an_empty_array_when_no_transactions_are_associated_with_the_invoice
-      invoice = engine.invoice_repo.find_by(:id, '999')
+      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      invoice = Invoice.new(input_data, engine.invoice_repo)
+      
 
       assert_equal [], invoice.transactions
     end
@@ -48,7 +50,10 @@ class InvoiceRepoTest < MiniTest::Test
     end
 
     def test_invoice_items__it_returns_an_empty_array_when_no_invoice_items_are_associated_with_the_invoice
-      invoice = engine.invoice_repo.find_by(:id, '999')
+
+      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      invoice = Invoice.new(input_data, engine.invoice_repo)
+
 
       assert_equal [], invoice.invoice_items
     end
@@ -71,7 +76,8 @@ class InvoiceRepoTest < MiniTest::Test
     end
 
     def test_items__it_returns_an_empty_array_when_no_items_are_associated_with_the_invoice
-      invoice = engine.invoice_repo.find_by(:id, '999')
+      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      invoice = Invoice.new(input_data, engine.invoice_repo)
 
       assert_equal [], invoice.items
     end
@@ -98,60 +104,5 @@ class InvoiceRepoTest < MiniTest::Test
 
       assert_equal "Osinski, Pollich and Koelpin", invoice.merchant.name
     end
-
-
-
-
-
-
-
-
-
-
-  # def test_returns_transactions_associated_with_an_invoice
-  #   engine = SalesEngine.new
-  #   engine.startup
-  #   engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
-  #   engine.transaction_repo.map_data(Transaction,'test/fixtures/transactions.csv')
-  #
-  #   assert_equal 2, engine.invoice_repo.transactions('13').size
-  # end
-  #
-  # def test_returns_invoice_items_associated_with_an_invoice
-  #   engine = SalesEngine.new
-  #   engine.startup
-  #   engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
-  #   engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-  #
-  #   assert_equal 4, engine.invoice_repo.invoice_items('2').size
-  # end
-  #
-  # def test_returns_items_associated_with_an_invoice
-  #   engine = SalesEngine.new
-  #   engine.startup
-  #   engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
-  #   engine.invoice_item_repo.map_data(InvoiceItem,'test/fixtures/invoice_items.csv')
-  #   engine.item_repo.map_data(Item,'test/fixtures/items.csv')
-  #   assert_equal 4, engine.invoice_repo.items('2').size
-  # end
-  #
-  # def test_returns_customer_associated_with_an_invoice
-  #   engine = SalesEngine.new
-  #   engine.startup
-  #   engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
-  #   engine.customer_repo.map_data(Customer,'test/fixtures/customers.csv')
-  #
-  #   assert_equal 'Joey', engine.invoice_repo.customer('2').first_name
-  # end
-  #
-  # def test_returns_merchant_associated_with_an_invoice
-  #   engine = SalesEngine.new
-  #   engine.startup
-  #   engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
-  #   engine.merchant_repo.map_data(Merchant,'test/fixtures/merchants.csv')
-  #
-  #   assert_equal 'Bechtelar, Jones and Stokes', engine.invoice_repo.merchant('20').name
-  # end
-
 
 end

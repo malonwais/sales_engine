@@ -22,12 +22,13 @@ class ItemRepoTest < MiniTest::Test
       invoice_item_ids = item.invoice_items.map {|invoice_item| invoice_item.id}
       quantities = item.invoice_items.map {|invoice_item| invoice_item.quantity}
 
-      assert_equal ['57', '60'], invoice_item_ids
-      assert_equal ['2', '3'], quantities
+      assert_equal ['57', '60'], invoice_item_ids[0..1]
+      assert_equal ['2', '3'], quantities[0..1]
     end
 
     def test_invoice_items__it_returns_an_empty_array_when_no_invoice_items_are_associated_with_item
-      item = engine.item_repo.find_by(:id, '18')
+      input_data = ['198273049','dgsdfg','ofijalekrsa','94829834','098132135','09834','24234']
+      item = Item.new(input_data, engine.item_repo)
 
       assert_equal [], item.invoice_items
     end

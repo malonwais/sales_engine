@@ -1,5 +1,5 @@
 require_relative 'test_helper'
-
+require_relative '../lib/invoice_item'
 class InvoiceItemTest < MiniTest::Test
 
   @@engine = SalesEngine.new
@@ -23,7 +23,8 @@ class InvoiceItemTest < MiniTest::Test
   end
 
     def test_it_returns_nil_when_invoice_is_not_found
-      invoice_item = engine.invoice_item_repo.find_by(:id, '4521')
+      input_data = ['9013', '29', '09810293810293', '2', '923', '09309', '09382']
+      invoice_item = InvoiceItem.new(input_data, engine.invoice_item_repo)
 
       assert_nil invoice_item.invoice
     end
@@ -42,7 +43,8 @@ class InvoiceItemTest < MiniTest::Test
   end
 
   def test_it_returns_nil_when_item_is_not_found
-    invoice_item = engine.invoice_item_repo.find_by(:id, '13')
+    input_data = ['901334', '223423429', '09810293810293', '2', '923', '09309', '09382']
+    invoice_item = InvoiceItem.new(input_data, engine.invoice_item_repo)
 
     assert_nil invoice_item.item
   end
