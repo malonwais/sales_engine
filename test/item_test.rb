@@ -51,7 +51,6 @@ class ItemRepoTest < MiniTest::Test
       item = Item.new(input_data, engine.item_repo)
       
       assert_equal(0, item.get_invoice_item_quantity)
-      
     end
 
 

@@ -44,5 +44,10 @@ class InvoiceItem
     #  puts merchant.id
     merchant
   end
+  
+  def successful?
+    transaction_repo = invoice_item_repository.se.transaction_repo
+    transaction_repo.find_by(:invoice_id, invoice_id).successful?
+  end
 
 end

@@ -33,6 +33,10 @@ class Item
     #I still have to detect only successful transactions
   end
   def get_invoice_item_quantity
+    # item_repository.se.invoice_items.each do |invoice_item|
+    # 
+    # end
     0
   end
+  
 end
