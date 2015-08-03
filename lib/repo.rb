@@ -45,5 +45,8 @@ class Repo
   def repo_table(symbol_thing)
     @se.send(symbol_thing).table
   end
+  def inspect
+    puts "hi"
+  end
 
 end

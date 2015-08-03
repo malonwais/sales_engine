@@ -7,7 +7,7 @@ class ItemRepo < Repo
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
-    map_data(Item,'./data/items.csv')
+    map_data(Item,'../sales_engine/data/items.csv')
   end
 
 end

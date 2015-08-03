@@ -7,7 +7,7 @@ class MerchantRepo < Repo
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
-    map_data(Merchant,'./data/merchants.csv')
+    map_data(Merchant,'../sales_engine/data/merchants.csv')
   end
 
   def most_revenue(merchant_count)
