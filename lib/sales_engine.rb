@@ -10,7 +10,7 @@ require 'pry'
 
 class SalesEngine
   attr_reader :customer_repository, :invoice_repository, :transaction_repo,
-  :invoice_item_repository, :merchant_repo, :item_repo
+  :invoice_item_repository, :merchant_repo, :item_repository
   
   def initialize(thing1=0, thing2=0)
     
@@ -22,7 +22,7 @@ class SalesEngine
     @transaction_repo = TransactionRepo.new(self)
     @invoice_item_repository = InvoiceItemRepository.new(self)
     @merchant_repo = MerchantRepo.new(self)
-    @item_repo = ItemRepo.new(self)
+    @item_repository = ItemRepository.new(self)
   end
 
   def intel_startup

@@ -29,7 +29,7 @@ class Invoice
 
   def items
     invoice_items.map do |invoice_item|
-        invoice_repository.se.item_repo.find_by(:id, invoice_item.item_id)
+        invoice_repository.se.item_repository.find_by(:id, invoice_item.item_id)
     end.uniq
     # invoice_items.each do |invoice_item|
     #   repo_table(:item_repo).select do |item|

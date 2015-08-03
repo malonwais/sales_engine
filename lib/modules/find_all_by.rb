@@ -2,9 +2,15 @@ module FindAllBy
   def find_all_by_last_name(last_name)
     find_all_by(:last_name, last_name)
   end
+  def find_all_by_item_id(item_id)
+    find_all_by(:item_id, item_id)
+  end
 
   def find_all_by_first_name(first_name)
     find_all_by(:first_name, first_name)
+  end
+  def find_all_by_name(name)
+    find_all_by(:name, name)
   end
   def find_all_by_customer_id(customer_id)
     customer_id = customer_id.to_i

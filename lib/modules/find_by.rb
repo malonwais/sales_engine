@@ -9,6 +9,9 @@ module FindBy
     id = id.to_i
     find_by(:id, id)
   end
+  def find_by_name(name)
+    find_by(:name, name)
+  end
   def find_by_customer_id(customer_id)
     id = id.to_i
     find_by(:customer_id, customer_id)
@@ -19,5 +22,9 @@ module FindBy
   end
   def find_by_status(status)
     find_by(:status, status)
+  end
+  def find_by_unit_price(unit_price)
+    unit_price = BigDecimal.new(unit_price)
+    find_by(:unit_price, unit_price)
   end
 end

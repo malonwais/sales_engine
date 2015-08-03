@@ -1,6 +1,6 @@
 require_relative 'repo'
 require_relative 'item'
-class ItemRepo < Repo
+class ItemRepository < Repo
 
   attr_reader :se, :table
 

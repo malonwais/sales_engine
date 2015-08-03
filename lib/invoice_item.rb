@@ -8,7 +8,7 @@ class InvoiceItem
     @item_id = input_data[1].to_i
     @invoice_id = input_data[2].to_i
     @quantity = input_data[3].to_i
-    @unit_price = input_data[4]
+    @unit_price = BigDecimal.new(input_data[4]) * 0.01
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @invoice_item_repository = invoice_item_repository
@@ -25,7 +25,7 @@ class InvoiceItem
     # invoice_item_repository.repo_table(:item_repo).find do |item|
     #   find_by(:id, id).item_id == id
     # end
-    invoice_item_repository.se.item_repo.find_by(:id, item_id)
+    invoice_item_repository.se.item_repository.find_by(:id, item_id)
   end
 
   def revenue
