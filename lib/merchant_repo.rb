@@ -11,22 +11,30 @@ class MerchantRepo < Repo
   end
 
   def most_revenue(merchant_count)
-    ranked_merchants = revenue_list.sort_by do |merchant, revenue|
-      revenue
-    end.reverse!
-    ranked_merchants[0..merchant_count - 1].map do |merchant_rank|
-      merchant_rank.first
-      # [merchant_rank.first.id,  merchant_rank.last]
-    end
+    top_merchants(merchant_count, ranked_merchants(revenue_list))
   end
 
   def most_items(merchant_count)
-    ranked_merchants = quantity_sold_list.sort_by do |merchant, quantity|
+    top_merchants(merchant_count, ranked_merchants(quantity_sold_list))
+  end
+
+  def revenue(date)
+    invoice_items = se.invoice_item_repo.find_all_by_date(:created_at, date)
+    invoice_items.reduce(0) do |sum, invoice_item|
+      sum + invoice_item.revenue
+    end
+  end
+
+  def ranked_merchants(merchant_list)
+    merchant_list.sort_by do |merchant, quantity|
       quantity
     end.reverse!
-    ranked_merchants[0..merchant_count - 1].map do |merchant_rank|
+  end
+
+  def top_merchants(count, merchants)
+    merchants[0..count - 1].map do |merchant_rank|
+      puts merchant_rank.last
       merchant_rank.first
-      # puts [merchant_rank.first.id,  merchant_rank.last]
     end
   end
 

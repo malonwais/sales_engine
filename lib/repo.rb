@@ -1,4 +1,5 @@
 require_relative 'file_io'
+require 'bigdecimal'
 
 class Repo
   # attr_reader :table
@@ -31,6 +32,13 @@ class Repo
   def find_all_by(symbol, hunt)
     self.table.select do |thing|
       thing.send(symbol) == hunt
+    end
+  end
+
+  def find_all_by_date(symbol, date)
+    date = Date.parse(date).strftime("%Y-%m-%d")
+    self.table.select do |thing|
+      thing.send(symbol)[0..9] == date
     end
   end
 

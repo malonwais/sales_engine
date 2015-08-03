@@ -29,7 +29,8 @@ class InvoiceItem
   end
 
   def revenue
-    if successful? then quantity.to_i * unit_price.to_i else 0 end
+    total = if successful? then quantity.to_i * unit_price.to_i else 0 end
+    BigDecimal.new(total)
   end
 
   def merchant
@@ -45,5 +46,12 @@ class InvoiceItem
 
     !transaction.nil? && transaction.successful?
   end
+
+  # def big_d(number)
+  #   dollars = number / 100
+  #   cents = number % 100
+  #
+  #   BigDecimal.new(dollars +.#{cents}")
+  # end
 
 end

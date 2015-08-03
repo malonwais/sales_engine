@@ -24,4 +24,41 @@ class Merchant
     end
   end
 
+  def revenue(date = false)
+    set_of_invoices = if date
+      date = Date.parse(date).strftime("%Y-%m-%d")
+      invoices.select do |invoice|
+        invoice.created_at[0..9] == date
+      end
+    else
+      invoices
+    end
+
+    set_of_invoices.reduce(0) do |sum, invoice|
+      sum + invoice.revenue
+    end
+  end
+
+  def favorite_customer
+    customers = Hash.new(0)
+    invoices.each do |invoice|
+      if invoice.successful?
+        customer = merchant_repository.se.customer_repo.find_by(:id, invoice.customer_id)
+        customers[customer] += 1
+      end
+    end
+    customers.sort_by{|customer, count| count}.reverse[0][0]
+  end
+
+  def customers_with_pending_invoices
+    customers = []
+    invoices.each do |invoice|
+      if !invoice.successful?
+        customers << merchant_repository.se.customer_repo.find_by(:id, invoice.customer_id)
+      end
+    end
+    customers
+  end
+
+
 end
