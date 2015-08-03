@@ -4,10 +4,10 @@ class InvoiceItem
   :invoice_item_repository
 
   def initialize(input_data, invoice_item_repository)
-    @id = input_data[0]
-    @item_id = input_data[1]
-    @invoice_id = input_data[2]
-    @quantity = input_data[3]
+    @id = input_data[0].to_i
+    @item_id = input_data[1].to_i
+    @invoice_id = input_data[2].to_i
+    @quantity = input_data[3].to_i
     @unit_price = input_data[4]
     @created_at = input_data[5]
     @updated_at = input_data[6]

@@ -3,11 +3,11 @@ class Item
               :updated_at, :item_repository
 
   def initialize(input_data, item_repository)
-    @id = input_data[0]
+    @id = input_data[0].to_i
     @name = input_data[1]
     @description = input_data[2]
     @unit_price = input_data[3]
-    @merchant_id = input_data[4]
+    @merchant_id = input_data[4].to_i
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @item_repository = item_repository

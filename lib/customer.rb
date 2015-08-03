@@ -4,7 +4,7 @@ class Customer
               :created_at, :updated_at, :customer_repository
 
   def initialize(input_data, customer_repository)
-    @id = input_data[0]
+    @id = input_data[0].to_i
     @first_name = input_data[1]
     @last_name = input_data[2]
     @created_at = input_data[3]
@@ -13,10 +13,25 @@ class Customer
   end
 
   def invoices
-    # @customer_repository.se.invoice_repo.find_all_by(:customer_id, id)
-    customer_repository.repo_table(:invoice_repo).select do |invoice|
-      invoice.customer_id == id
+    @customer_repository.se.invoice_repo.find_all_by_customer_id(id)
+  end
+  def transactions
+    customer_transactions =  []
+    invoices.each do |invoice|
+      customer_transactions << @customer_repository.se.transaction_repo.find_all_by_invoice_id(invoice.id)
     end
+    customer_transactions
+  end
+  
+  def favorite_merchant
+    merchants = Hash.new(0)
+    invoices.each do |invoice|
+      if invoice.successful?
+        merchant = customer_repository.se.merchant_repo.find_by(:id, invoice.merchant_id)
+        merchants[merchant] += 1
+      end
+    end
+    merchants.sort_by{|merchant, count| count}.reverse[0][0]
   end
 
 end

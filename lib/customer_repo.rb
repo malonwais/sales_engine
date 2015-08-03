@@ -7,6 +7,7 @@ class CustomerRepository < Repo
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
+    customer = @table
     map_data(Customer,'../sales_engine/data/customers.csv')
   end
 

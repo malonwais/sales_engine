@@ -5,8 +5,8 @@ class Transaction
   :transaction_repository
 
   def initialize(input_data, transaction_repository)
-    @id = input_data[0]
-    @invoice_id = input_data[1]
+    @id = input_data[0].to_i
+    @invoice_id = input_data[1].to_i
     @credit_card_number = input_data[2]
     @credit_card_expiration_date = input_data[3]
     @result = input_data[4]
