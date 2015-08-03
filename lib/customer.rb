@@ -13,7 +13,7 @@ class Customer
   end
 
   def invoices
-    @customer_repository.se.invoice_repo.find_all_by_customer_id(id)
+    @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
   end
   def transactions
     customer_transactions =  []

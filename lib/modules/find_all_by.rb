@@ -18,6 +18,8 @@ module FindAllBy
     quantity = quantity.to_i
     find_all_by(:quantity, quantity)
   end
-
+  def find_all_by_status(status)
+    find_all_by(:status, status)
+  end
   
 end

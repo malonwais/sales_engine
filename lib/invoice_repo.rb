@@ -1,6 +1,6 @@
 require_relative 'repo'
 require_relative 'invoice'
-class InvoiceRepo < Repo
+class InvoiceRepository < Repo
 
   attr_reader :se, :table
 

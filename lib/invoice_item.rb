@@ -18,7 +18,7 @@ class InvoiceItem
     # invoice_item_repository.repo_table(:invoice_repo).find do |invoice|
     #   find_by(:id, id).invoice_id == id
     # end
-    invoice_item_repository.se.invoice_repo.find_by(:id, invoice_id)
+    invoice_item_repository.se.invoice_repository.find_by(:id, invoice_id)
   end
 
   def item

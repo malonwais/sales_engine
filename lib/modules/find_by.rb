@@ -17,4 +17,7 @@ module FindBy
     id = id.to_i
     find_by(:item_id, item_id)
   end
+  def find_by_status(status)
+    find_by(:status, status)
+  end
 end

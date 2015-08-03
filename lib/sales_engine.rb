@@ -9,7 +9,7 @@ require 'pry'
 
 
 class SalesEngine
-  attr_reader :customer_repository, :invoice_repo, :transaction_repo,
+  attr_reader :customer_repository, :invoice_repository, :transaction_repo,
   :invoice_item_repository, :merchant_repo, :item_repo
   
   def initialize(thing1=0, thing2=0)
@@ -18,7 +18,7 @@ class SalesEngine
 
   def repo_startup
     @customer_repository = CustomerRepository.new(self)
-    @invoice_repo = InvoiceRepo.new(self)
+    @invoice_repository = InvoiceRepository.new(self)
     @transaction_repo = TransactionRepo.new(self)
     @invoice_item_repository = InvoiceItemRepository.new(self)
     @merchant_repo = MerchantRepo.new(self)

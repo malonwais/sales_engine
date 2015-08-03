@@ -39,7 +39,7 @@ class Invoice
   end
 
   def customer
-    invoice_repository.se.customer_repo.find_by(:id, customer_id)
+    invoice_repository.se.customer_repository.find_by(:id, customer_id)
     # repo_table(:customer_repo).find do |customer|
     #   find_by(:id, invoice_id).customer_id == customer.id
     # end
