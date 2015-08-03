@@ -3,28 +3,23 @@ class Item
               :updated_at, :item_repository
 
   def initialize(input_data, item_repository)
-    @id = input_data[0]
+    @id = input_data[0].to_i
     @name = input_data[1]
     @description = input_data[2]
-    @unit_price = input_data[3]
-    @merchant_id = input_data[4]
+    @unit_price = BigDecimal.new(input_data[3]) * 0.01
+    @merchant_id = input_data[4].to_i
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @item_repository = item_repository
   end
 
   def invoice_items
-    # item_repository.se.invoice_item_repo.find_all_by(:item_id, id)
-    item_repository.repo_table(:invoice_item_repo).select do |invoice_item|
-      invoice_item.item_id == id
-    end
+    item_repository.se.invoice_item_repository.find_all_by_item_id(id)
   end
 
   def merchant
-    # item_repository.se.merchant_repo.find_by(:id, merchant_id)
-    item_repository.repo_table(:merchant_repo).find do |merchant|
-      merchant_id == merchant.id
-    end
+    item_repository.se.merchant_repo.find_by(:id, merchant_id)
+    
   end
   def best_day(invoice_date)
     

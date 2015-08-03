@@ -6,10 +6,10 @@ class CustomerTest < MiniTest::Test
   # def test_can_find_invoices
   #   engine = SalesEngine.new
   #   engine.startup
-  #   # engine.customer_repo.map_data(Customer,'test/fixtures/customers.csv')
+  #   # engine.customer_repository.map_data(Customer,'test/fixtures/customers.csv')
   #   # engine.invoice_repo.map_data(Invoice,'test/fixtures/invoices.csv')
   #
-  #   assert_equal 8, engine.customer_repo.invoices('1').size
+  #   assert_equal 8, engine.customer_repository.invoices('1').size
   # end
 
 
@@ -21,14 +21,14 @@ def engine
 end
 
 def test_invoices__it_returns_an_array_of_invoices
-  customer = engine.customer_repo.find_by(:id, '21')#######
+  customer = engine.customer_repository.find_by_id('21')#######
 
   assert_equal Array, customer.invoices.class
   assert customer.invoices.all?{|invoice| invoice.class == Invoice}
 end
 
 def test_invoices__it_returns_the_correct_invoices
-  customer = engine.customer_repo.find_by(:id, '21')
+  customer = engine.customer_repository.find_by_id('21')
 
   invoice_ids = customer.invoices.map {|invoice| invoice.id}
   merchant_ids = customer.invoices.map {|invoice| invoice.merchant_id}
@@ -41,7 +41,7 @@ def test_invoices__it_returns_an_empty_array_when_no_invoices_are_associated_wit
   
   input_data = ['9892873429834','Fake','name','0932','09342']
   
-  customer = Customer.new(input_data, engine.customer_repo)
+  customer = Customer.new(input_data, engine.customer_repository)
 
   assert_equal [], customer.invoices
 end

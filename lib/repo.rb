@@ -1,8 +1,13 @@
 require_relative 'file_io'
+require_relative 'modules/find_by'
+require_relative 'modules/find_all_by'
 require 'bigdecimal'
+
 
 class Repo
   # attr_reader :table
+  include FindBy
+  include FindAllBy
 
   def input_data(file_name)
     FileIO.new(file_name).input_data
@@ -44,6 +49,9 @@ class Repo
 
   def repo_table(symbol_thing)
     @se.send(symbol_thing).table
+  end
+  def inspect
+    self.Class
   end
 
 end

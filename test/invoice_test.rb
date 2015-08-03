@@ -104,5 +104,34 @@ class InvoiceRepoTest < MiniTest::Test
 
       assert_equal "Osinski, Pollich and Koelpin", invoice.merchant.name
     end
+    def test__revenue__it_returns_0_when_the_invoice_doesnt_have_a_cooresponding_transaction
+      #we have made $0 from a invoice that has no transaction
+      input_data = ['2132123','2412312312','2312314123','shipped','81231','123144']
+      invoice = Invoice.new(input_data, engine.invoice_repo)
+      
+      assert_equal 0, invoice.revenue
+    end
+    def test__revenue__it_returns_a_big_decimal_when_given_a_valid_invoice
+      invoice = engine.invoice_repo.find_by(:id, '12')
+      assert_equal BigDecimal, invoice.revenue.class
+    end
+    
+    def test__revenue__it_returns_the_correct_revenue
+      @id = input_data[0]
+      @invoice_id = input_data[1]
+      @credit_card_number = input_data[2]
+      @credit_card_expiration_date = input_data[3]
+      @result = input_data[4]
+      @created_at = input_data[5]
+      @updated_at = input_data[5]
+      @transaction_repository = transaction_repository
+      transaction1 = ['999997','23232323','098123098123',]
+      
+      
+      input_data = ['23232323','2412312312','2312314123','shipped','81231','123144']
+      invoice = Invoice.new(input_data, engine.invoice_repo)
+      
+      assert_equal BigDecimal, invoice.revenue
+    end
 
 end

@@ -1,13 +1,13 @@
 require_relative 'repo'
 require_relative 'invoice'
-class InvoiceRepo < Repo
+class InvoiceRepository < Repo
 
   attr_reader :se, :table
 
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
-    map_data(Invoice,'./data/invoices.csv')
+    map_data(Invoice,'../sales_engine/data/invoices.csv')
   end
 
 

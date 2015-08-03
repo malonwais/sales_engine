@@ -2,7 +2,7 @@ class Merchant
   attr_reader :id, :name, :merchant_id, :merchant_repository
 
   def initialize(input_data, merchant_repository)
-    @id = input_data[0]
+    @id = input_data[0].to_i
     @name = input_data[1]
     @created_at = input_data[2]
     @updated_at = input_data[3]
