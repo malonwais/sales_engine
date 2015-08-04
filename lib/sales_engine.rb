@@ -11,8 +11,9 @@ require 'pry'
 class SalesEngine
   attr_reader :customer_repository, :invoice_repository, :transaction_repo,
   :invoice_item_repository, :merchant_repo, :item_repository
-  
+
   def initialize(thing1=0, thing2=0)
+
     
   end
 
