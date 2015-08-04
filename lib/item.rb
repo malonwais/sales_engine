@@ -6,7 +6,7 @@ class Item
     @id = input_data[0].to_i
     @name = input_data[1]
     @description = input_data[2]
-    @unit_price = BigDecimal.new(input_data[3]) * 0.01
+    @unit_price = BigDecimal.new(input_data[3]) 
     @merchant_id = input_data[4].to_i
     @created_at = input_data[5]
     @updated_at = input_data[6]
@@ -18,7 +18,7 @@ class Item
   end
 
   def merchant
-    item_repository.se.merchant_repo.find_by(:id, merchant_id)
+    item_repository.se.merchant_repository.find_by(:id, merchant_id)
     
   end
   def best_day(invoice_date)

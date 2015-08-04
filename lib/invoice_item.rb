@@ -8,7 +8,7 @@ class InvoiceItem
     @item_id = input_data[1].to_i
     @invoice_id = input_data[2].to_i
     @quantity = input_data[3].to_i
-    @unit_price = BigDecimal.new(input_data[4]) * 0.01
+    @unit_price = BigDecimal.new(input_data[4]) 
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @invoice_item_repository = invoice_item_repository
@@ -37,14 +37,14 @@ class InvoiceItem
   end
 
   def merchant
-    item_repo = invoice_item_repository.se.item_repo
+    item_repo = invoice_item_repository.se.item_repository
     merchant = item_repo.find_by(:id, item_id).merchant
 
     merchant
   end
 
   def successful?
-    transaction_repo = invoice_item_repository.se.transaction_repo
+    transaction_repo = invoice_item_repository.se.transaction_repository
     transaction = transaction_repo.find_by(:invoice_id, invoice_id)
 
     !transaction.nil? && transaction.successful?

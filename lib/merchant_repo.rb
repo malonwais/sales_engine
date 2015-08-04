@@ -1,6 +1,6 @@
 require_relative 'repo'
 require_relative 'merchant'
-class MerchantRepo < Repo
+class MerchantRepository < Repo
 
   attr_reader :se, :table
 
@@ -19,7 +19,7 @@ class MerchantRepo < Repo
   end
 
   def revenue(date)
-    invoice_items = se.invoice_item_repo.find_all_by_date(:created_at, date)
+    invoice_items = se.invoice_item_repository.find_all_by_date(:created_at, date)
     invoice_items.reduce(0) do |sum, invoice_item|
       sum + invoice_item.revenue
     end
@@ -39,7 +39,7 @@ class MerchantRepo < Repo
 
   def revenue_list
     grouped_revenue = Hash.new(0)
-    se.invoice_item_repo.all.each do |invoice_item|
+    se.invoice_item_repository.all.each do |invoice_item|
       grouped_revenue[invoice_item.merchant] += invoice_item.revenue
     end
     grouped_revenue
@@ -47,7 +47,7 @@ class MerchantRepo < Repo
 
   def quantity_sold_list
     grouped_quantity_sold = Hash.new(0)
-  	se.invoice_item_repo.all.each do |invoice_item|
+  	se.invoice_item_repository.all.each do |invoice_item|
       merchant = invoice_item.merchant
       quantity = invoice_item.quantity
       grouped_quantity_sold[merchant] += quantity.to_i if invoice_item.successful?
