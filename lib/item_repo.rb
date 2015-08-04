@@ -12,9 +12,9 @@ class ItemRepository < Repo
   
   def most_revenue(item_count)
 
-    
-    item_revenue_by_invoice = item_data_by_invoice(:simple_revenue)
-    items_by_revenue = items_values(item_revenue_by_invoice)
+    invoice_item_repo = se.invoice_item_repository
+    item_revenue_by_invoice = invoice_item_repo.item_data_by_invoice(:simple_revenue)
+    items_by_revenue = invoice_item_repo.items_values(item_revenue_by_invoice)
     
     items_by_revenue = items_by_revenue.sort_by do |item,revenue|
       revenue
@@ -28,8 +28,9 @@ class ItemRepository < Repo
   
   end
   def most_items(item_count)
-    item_quantity_by_invoice = item_data_by_invoice(:quantity)
-    items_by_quantity = items_values(item_quantity_by_invoice)
+    invoice_item_repo = se.invoice_item_repository
+    item_quantity_by_invoice = invoice_item_repo.item_data_by_invoice(:quantity)
+    items_by_quantity = invoice_item_repo.items_values(item_quantity_by_invoice)
     
     items_by_quantity = items_by_quantity.sort_by do |item,quantity|
       quantity
@@ -41,41 +42,6 @@ class ItemRepository < Repo
     
   end
   
-  def item_data_by_invoice(method_name)
-    output_hash = {}
-    
-    se.invoice_item_repository.table.each do |invoice_item|
-      invoice_id = invoice_item.invoice_id
-      item_id = invoice_item.item_id
-      data = invoice_item.send(method_name)
-      output_hash[invoice_id] ||= {}
-      
-      if output_hash[invoice_id][item_id].nil?
-        output_hash[invoice_id][item_id] = data
-      else
-        output_hash[invoice_id][item_id] += data
-      end
-      
-    end
-    output_hash
-  end
-  def items_values(data_by_invoice)
-    output = {}
-    data_by_invoice.each do |invoice_id, items_with_values|
-      invoice = se.invoice_repository.find_by_id(invoice_id)
-      if invoice.successful?
-        items_with_values.each do |item_id, value|
-          if output[item_id].nil?
-            output[item_id] = value
-          else
-            output[item_id] += value
-          end
-        end
-        
-      end
-    end
-    output
-    
-  end
+
   
 end

@@ -1,5 +1,6 @@
 class Merchant
-  attr_reader :id, :name, :merchant_id, :merchant_repository
+  attr_reader :id, :name, :merchant_id, :merchant_repository, 
+              :created_at, :updated_at
   
   def initialize(input_data, merchant_repository)
     @id = input_data[0].to_i
@@ -17,11 +18,7 @@ class Merchant
   end
   
   def invoices
-    # merchant_repository.se.invoice_repo.find_all_by(:merchant_id, id)
-    
-    merchant_repository.repo_table(:invoice_repository).select do |invoice|
-      invoice.merchant_id == id
-    end
+    merchant_repository.se.invoice_repository.find_all_by(:merchant_id, id)
   end
   
   def revenue(date = false)
@@ -62,6 +59,9 @@ class Merchant
       end
     end
     customers
+  end
+  def inspect
+    self.class
   end
   
   
