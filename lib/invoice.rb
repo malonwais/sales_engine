@@ -15,7 +15,7 @@ class Invoice
 
   def transactions
     # invoice_repository.se.transaction_repo.find_all_by(:invoice_id, id)
-    invoice_repository.repo_table(:transaction_repo).select do |transaction|
+    invoice_repository.repo_table(:transaction_repository).select do |transaction|
       transaction.invoice_id == id
     end
   end
@@ -52,7 +52,7 @@ class Invoice
     # end
   end
   def revenue
-    invoice_items = invoice_repository.se.invoice_item_repo.find_all_by(:invoice_id, id)
+    invoice_items = invoice_repository.se.invoice_item_repository.find_all_by(:invoice_id, id)
 
     invoice_items.reduce(0) do |sum, invoice_item|
       sum + invoice_item.revenue
@@ -60,7 +60,7 @@ class Invoice
   end
 
   def successful?
-    transaction_repo = invoice_repository.se.transaction_repo
+    transaction_repo = invoice_repository.se.transaction_repository
     transaction = transaction_repo.find_by(:invoice_id, id)
 
     !transaction.nil? && transaction.successful?

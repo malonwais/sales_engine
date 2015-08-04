@@ -1,7 +1,7 @@
 require_relative 'repo'
 require_relative 'transaction'
 
-class TransactionRepo < Repo
+class TransactionRepository < Repo
 
   attr_reader :se, :table
 

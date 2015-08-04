@@ -27,5 +27,8 @@ module FindAllBy
   def find_all_by_status(status)
     find_all_by(:status, status)
   end
+  def find_all_by_result(result)
+    find_all_by(:result, result)     
+  end
   
 end
