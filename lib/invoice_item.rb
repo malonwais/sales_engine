@@ -32,6 +32,9 @@ class InvoiceItem
     total = if successful? then quantity.to_i * unit_price.to_i else 0 end
     BigDecimal.new(total)
   end
+  def simple_revenue
+    quantity * unit_price
+  end
 
   def merchant
     item_repo = invoice_item_repository.se.item_repo

@@ -33,7 +33,6 @@ class MerchantRepo < Repo
 
   def top_merchants(count, merchants)
     merchants[0..count - 1].map do |merchant_rank|
-      puts merchant_rank.last
       merchant_rank.first
     end
   end
