@@ -34,14 +34,40 @@ class CustomerTest < MiniTest::Test
     
     assert_equal [], customer.invoices
   end
+  def test_transactions__it_returns_an_array_of_transactions
+    input_data = ['1','Fake','name','0932','09342']
+    
+    customer = Customer.new(input_data, engine.customer_repository)
+
+    assert_equal Array, customer.transactions.class
+    assert customer.transactions.all?{|transaction| transaction.class == Transaction}
+  end
+
   def test_transactions__it_returns_an_empty_array_when_no_arrays_exist_for_that_customer
-    skip
     input_data = ['999999999','Fake','name','0932','09342']
     
     customer = Customer.new(input_data, engine.customer_repository)
     
     assert_equal [], customer.transactions
   end
+  def test_favorite_merchant__it_returns_a_merchant
+    input_data = ['1','Fake','name','0932','09342']
+    customer = Customer.new(input_data, engine.customer_repository)
+    assert_equal Merchant, customer.favorite_merchant.class
+  end
+  def test_favorite_merchant__it_returns_the_right_merchant
+    input_data = ['40','Fake','name','0932','09342']
+    customer = Customer.new(input_data, engine.customer_repository)
+    assert_equal 24, customer.favorite_merchant.id
+  end
+  def test_favorite_merchant__it_returns_nil_when_the_customer_has_no_favorite_merchant
+    input_data = ['999999999','Fake','name','0932','09342']
+    customer = Customer.new(input_data, engine.customer_repository)
+    refute customer.favorite_merchant
+  end
+  
+  
+  
   
   
   
