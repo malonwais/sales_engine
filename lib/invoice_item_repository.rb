@@ -54,9 +54,8 @@ class InvoiceItemRepository < Repository
       updated_at = created_at
 
       new_record = [new_id, item_id, invoice_id, quantity, unit_price, created_at, updated_at]
-      new_invoice_item = InvoiceItem.new(new_record, self)
-      table << new_invoice_item
-      hash = populate_quick_lookup_table(table)
+      table << InvoiceItem.new(new_record, self)
+      quick_lookup_table = populate_quick_lookup_table(table)
     end
   end
 

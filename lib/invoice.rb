@@ -53,12 +53,11 @@ class Invoice
     #   find_by(:id, invoice_id).merchant_id == merchant.id
     # end
   end
+
   def revenue
     invoice_items = invoice_repository.se.invoice_item_repository.find_all_by(:invoice_id, id)
 
-    invoice_items.reduce(0) do |sum, invoice_item|
-      sum + invoice_item.revenue
-    end
+    invoice_items.reduce(0) {|sum, invoice_item| sum + invoice_item.revenue}
   end
 
   def successful?
@@ -68,5 +67,8 @@ class Invoice
     !transaction.nil? && transaction.successful?
   end
 
+  def charge(info)
+    invoice_repository.se.transaction_repository.add_transaction(id, info)
+  end
 
 end
