@@ -1,14 +1,14 @@
-require_relative 'repo'
+require_relative 'repository'
 require_relative 'invoice'
-class InvoiceRepository < Repo
+class InvoiceRepository < Repository
 
-  attr_reader :se, :table, :hash
+  attr_reader :se, :table, :quick_lookup_table
 
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
     map_data(Invoice,'../sales_engine/data/invoices.csv')
-    @hash = populate_hash(@table)
+    @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
   def create(invoice_info)
@@ -23,7 +23,7 @@ class InvoiceRepository < Repo
     new_record = [new_id, customer_id, merchant_id, status, created_at, updated_at]
     new_invoice = Invoice.new(new_record, self)
     table << new_invoice
-    hash = populate_hash(table)
+    @quick_lookup_table = populate_quick_lookup_table(table)
 
     se.invoice_item_repository.add_invoice_items(items, new_id)
 

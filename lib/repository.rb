@@ -4,7 +4,7 @@ require_relative 'modules/find_all_by'
 require 'bigdecimal'
 
 
-class Repo
+class Repository
   # attr_reader :table
   include FindBy
   include FindAllBy
@@ -20,17 +20,13 @@ class Repo
     @table.shift #removes header info
   end
 
-  def populate_hash(table)
+  def populate_quick_lookup_table(table)
     output = Hash.new()
-    table[0].args.each do |arg|
-      output[arg] = {}
-    end
+    table[0].fields.each{ |field| output[field] = {} }
 
     table.reverse!
     table.each do |record|
-      record.args.each do |arg|
-        output[arg][record.send(arg)] =  record
-      end
+      record.fields.each{|field| output[field][record.send(field)] = record}
     end
     output
   end
@@ -44,7 +40,7 @@ class Repo
   end
 
   def find_by(symbol, hunt)
-    hash[symbol][hunt]
+    quick_lookup_table[symbol][hunt]
     # self.table.find do |thing|
     #   thing.send(symbol) == hunt
     # end

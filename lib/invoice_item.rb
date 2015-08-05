@@ -1,7 +1,7 @@
 class InvoiceItem
   attr_reader :id, :item_id, :invoice_id, :quantity,
   :unit_price, :created_at, :updated_at,
-  :invoice_item_repository, :args
+  :invoice_item_repository, :fields
 
   def initialize(input_data, invoice_item_repository)
     @id = input_data[0].to_i
@@ -12,7 +12,7 @@ class InvoiceItem
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @invoice_item_repository = invoice_item_repository
-    @args = [:id, :item_id, :invoice_id, :quantity,
+    @fields = [:id, :item_id, :invoice_id, :quantity,
     :unit_price, :created_at, :updated_at]
   end
 
@@ -39,15 +39,15 @@ class InvoiceItem
   end
 
   def merchant
-    item_repo = invoice_item_repository.se.item_repository
-    merchant = item_repo.find_by(:id, item_id).merchant
+    item_repository = invoice_item_repository.se.item_repository
+    merchant = item_repository.find_by(:id, item_id).merchant
 
     merchant
   end
 
   def successful?
-    transaction_repo = invoice_item_repository.se.transaction_repository
-    transaction = transaction_repo.find_by(:invoice_id, invoice_id)
+    transaction_repository = invoice_item_repository.se.transaction_repository
+    transaction = transaction_repository.find_by(:invoice_id, invoice_id)
 
     !transaction.nil? && transaction.successful?
   end

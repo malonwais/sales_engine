@@ -1,21 +1,21 @@
-require_relative 'repo'
+require_relative 'repository'
 require_relative 'item'
-class ItemRepository < Repo
+class ItemRepository < Repository
 
-  attr_reader :se, :table, :hash
+  attr_reader :se, :table, :quick_lookup_table
 
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
     map_data(Item,'../sales_engine/data/items.csv')
-    @hash = populate_hash(@table)
+    @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
   def most_revenue(item_count)
 
-    invoice_item_repo = se.invoice_item_repository
-    item_revenue_by_invoice = invoice_item_repo.item_data_by_invoice(:simple_revenue)
-    items_by_revenue = invoice_item_repo.items_values(item_revenue_by_invoice)
+    invoice_item_repository = se.invoice_item_repository
+    item_revenue_by_invoice = invoice_item_repository.item_data_by_invoice(:simple_revenue)
+    items_by_revenue = invoice_item_repository.items_values(item_revenue_by_invoice)
 
     items_by_revenue = items_by_revenue.sort_by do |item,revenue|
       revenue
@@ -29,9 +29,9 @@ class ItemRepository < Repo
   end
 
   def most_items(item_count)
-    invoice_item_repo = se.invoice_item_repository
-    item_quantity_by_invoice = invoice_item_repo.item_data_by_invoice(:quantity)
-    items_by_quantity = invoice_item_repo.items_values(item_quantity_by_invoice)
+    invoice_item_repository = se.invoice_item_repository
+    item_quantity_by_invoice = invoice_item_repository.item_data_by_invoice(:quantity)
+    items_by_quantity = invoice_item_repository.items_values(item_quantity_by_invoice)
 
     items_by_quantity = items_by_quantity.sort_by do |item,quantity|
       quantity
@@ -40,9 +40,6 @@ class ItemRepository < Repo
     top_items = items_by_quantity[0..item_count-1].map do |item_id, quantity|
       find_by_id(item_id)
     end
-
   end
-
-
 
 end

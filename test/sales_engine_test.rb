@@ -7,13 +7,13 @@ class SalesEngineTest < MiniTest::Test
     engine = SalesEngine.new
     engine.startup
     assert_equal CustomerRepository, engine.customer_repository.class
-    assert_equal InvoiceRepo, engine.invoice_repo.class
-    assert_equal TransactionRepo, engine.transaction_repo.class
-    assert_equal InvoiceItemRepo, engine.invoice_item_repo.class
-    assert_equal MerchantRepo, engine.merchant_repo.class
-    assert_equal ItemRepo, engine.item_repo.class
+    assert_equal InvoiceRepository, engine.invoice_repository.class
+    assert_equal TransactionRepository, engine.transaction_repository.class
+    assert_equal InvoiceItemRepository, engine.invoice_item_repository.class
+    assert_equal MerchantRepository, engine.merchant_repository.class
+    assert_equal ItemRepository, engine.item_repository.class
     assert_equal engine, engine.customer_repository.se
-    assert_equal engine, engine.merchant_repo.se
+    assert_equal engine, engine.merchant_repository.se
   end
 
 end

@@ -1,7 +1,7 @@
 class Invoice
   attr_reader :id, :customer_id, :merchant_id,
               :status, :created_at, :updated_at,
-              :invoice_repository, :args
+              :invoice_repository, :fields
 
   def initialize(input_data, invoice_repository)
     @id = input_data[0].to_i
@@ -11,7 +11,7 @@ class Invoice
     @created_at = input_data[4]
     @updated_at = input_data[5]
     @invoice_repository = invoice_repository
-    @args = [:id, :customer_id, :merchant_id,
+    @fields = [:id, :customer_id, :merchant_id,
                 :status, :created_at, :updated_at]
   end
 
@@ -53,20 +53,22 @@ class Invoice
     #   find_by(:id, invoice_id).merchant_id == merchant.id
     # end
   end
+
   def revenue
     invoice_items = invoice_repository.se.invoice_item_repository.find_all_by(:invoice_id, id)
 
-    invoice_items.reduce(0) do |sum, invoice_item|
-      sum + invoice_item.revenue
-    end
+    invoice_items.reduce(0) {|sum, invoice_item| sum + invoice_item.revenue}
   end
 
   def successful?
-    transaction_repo = invoice_repository.se.transaction_repository
-    transaction = transaction_repo.find_by(:invoice_id, id)
+    transaction_repository = invoice_repository.se.transaction_repository
+    transaction = transaction_repository.find_by(:invoice_id, id)
 
     !transaction.nil? && transaction.successful?
   end
 
+  def charge(info)
+    invoice_repository.se.transaction_repository.add_transaction(id, info)
+  end
 
 end
