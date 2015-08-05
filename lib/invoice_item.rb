@@ -8,7 +8,7 @@ class InvoiceItem
     @item_id = input_data[1].to_i
     @invoice_id = input_data[2].to_i
     @quantity = input_data[3].to_i
-    @unit_price = BigDecimal.new(input_data[4]) 
+    @unit_price = BigDecimal.new(input_data[4])
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @invoice_item_repository = invoice_item_repository
@@ -31,9 +31,9 @@ class InvoiceItem
   end
 
   def revenue
-    total = if successful? then quantity.to_i * unit_price.to_i else 0 end
-    BigDecimal.new(total)
+    if successful? then quantity * unit_price else 0 end
   end
+
   def simple_revenue
     quantity * unit_price
   end
