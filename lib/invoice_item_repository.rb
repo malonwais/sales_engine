@@ -8,7 +8,7 @@ class InvoiceItemRepository < Repository
     @se = sales_engine
     @table = []
     @invoice_items =  @table
-    map_data(InvoiceItem,'../sales_engine/data/invoice_items.csv')
+    map_data(InvoiceItem, File.join(csv_path, "invoice_items.csv"))
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 

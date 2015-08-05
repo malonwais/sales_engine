@@ -8,7 +8,7 @@ class MerchantRepository < Repository
     @se = sales_engine
     @table = []
 
-    map_data(Merchant,'../sales_engine/data/merchants.csv')
+    map_data(Merchant,File.join(csv_path, "merchants.csv"))
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 

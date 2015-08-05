@@ -8,7 +8,7 @@ class TransactionRepository < Repository
   def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
-    map_data(Transaction,'../sales_engine/data/transactions.csv')
+    map_data(Transaction,File.join(csv_path, "transactions.csv"))
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
