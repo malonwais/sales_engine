@@ -31,8 +31,8 @@ class ItemRepository < Repository
 
   def most_items(item_count)
     invoice_items = se.invoice_item_repository
-    item_quantity_by_invoice = ivoice_items.item_data_by_invoice(:quantity)
-    items_by_quantity = ivoice_items.items_values(item_quantity_by_invoice)
+    item_quantity_by_invoice = invoice_items.item_data_by_invoice(:quantity)
+    items_by_quantity = invoice_items.items_values(item_quantity_by_invoice)
 
     items_by_quantity = items_by_quantity.sort_by do |item,quantity|
       quantity
