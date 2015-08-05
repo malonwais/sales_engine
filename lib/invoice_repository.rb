@@ -4,10 +4,10 @@ class InvoiceRepository < Repository
 
   attr_reader :se, :table, :quick_lookup_table
 
-  def initialize(sales_engine)
+  def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
-    map_data(Invoice,'../sales_engine/data/invoices.csv')
+    map_data(Invoice,File.join(csv_path, "invoices.csv"))
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
@@ -20,7 +20,8 @@ class InvoiceRepository < Repository
     items = invoice_info[:items]
     new_id = table[-1].id + 1
 
-    new_record = [new_id, customer_id, merchant_id, status, created_at, updated_at]
+    new_record = [new_id, customer_id, merchant_id,
+                  status, created_at, updated_at]
     new_invoice = Invoice.new(new_record, self)
     table << new_invoice
     @quick_lookup_table = populate_quick_lookup_table(table)

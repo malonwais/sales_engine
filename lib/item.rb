@@ -29,7 +29,7 @@ class Item
   end
 
   def ranked_revenue_by_date
-  	revenue_by_date.sort_by{|date, revenue| revenue}.reverse
+    revenue_by_date.sort_by{|date, revenue| revenue}.reverse
   end
 
   def revenue_by_date
@@ -45,7 +45,7 @@ class Item
   end
 
   def revenues_by_invoice_id
-  	invoice_ids = Hash.new(0)
+    invoice_ids = Hash.new(0)
     invoice_items = item_repository.se.invoice_item_repository.all
 
     invoice_items.each do |invoice_item|

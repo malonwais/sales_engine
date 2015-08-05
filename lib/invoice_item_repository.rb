@@ -4,11 +4,11 @@ require_relative 'invoice_item'
 class InvoiceItemRepository < Repository
   attr_reader :se, :table, :invoice_items, :quick_lookup_table
 
-  def initialize(sales_engine)
+  def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
     @invoice_items =  @table
-    map_data(InvoiceItem,'../sales_engine/data/invoice_items.csv')
+    map_data(InvoiceItem, File.join(csv_path, "invoice_items.csv"))
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
@@ -53,7 +53,8 @@ class InvoiceItemRepository < Repository
       created_at = Time.now.utc.to_s
       updated_at = created_at
 
-      new_record = [new_id, item_id, invoice_id, quantity, unit_price, created_at, updated_at]
+      new_record = [new_id, item_id, invoice_id, quantity, unit_price,
+                    created_at, updated_at]
       table << InvoiceItem.new(new_record, self)
       @quick_lookup_table = populate_quick_lookup_table(table)
     end

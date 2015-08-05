@@ -16,28 +16,21 @@ class Invoice
   end
 
   def transactions
-    # invoice_repository.se.transaction_repo.find_all_by(:invoice_id, id)
-    invoice_repository.repo_table(:transaction_repository).select do |transaction|
+    transaction_repository = invoice_repository.se.transaction_repository
+    transaction_repository.table.select do |transaction|
       transaction.invoice_id == id
     end
   end
 
   def invoice_items
-    invoice_repository.se.invoice_item_repository.find_all_by_invoice_id(id)
-    # invoice_repository.repo_table(:invoice_item_repo).select do |invoice_item|
-    #   invoice_item.invoice_id == id
-    # end
+    invoice_item_repository = invoice_repository.se.invoice_item_repository
+    invoice_item_repository.find_all_by_invoice_id(id)
   end
 
   def items
     invoice_items.map do |invoice_item|
         invoice_repository.se.item_repository.find_by(:id, invoice_item.item_id)
     end.uniq
-    # invoice_items.each do |invoice_item|
-    #   repo_table(:item_repo).select do |item|
-    #     invoice_item.item_id == item.id
-    #   end
-    # end
   end
 
   def customer
@@ -55,7 +48,8 @@ class Invoice
   end
 
   def revenue
-    invoice_items = invoice_repository.se.invoice_item_repository.find_all_by(:invoice_id, id)
+    invoice_item_repository = invoice_repository.se.invoice_item_repository
+    invoice_items = invoice_item_repository.find_all_by(:invoice_id, id)
 
     invoice_items.reduce(0) {|sum, invoice_item| sum + invoice_item.revenue}
   end

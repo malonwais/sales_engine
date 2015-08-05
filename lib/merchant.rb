@@ -46,7 +46,8 @@ class Merchant
     customers = Hash.new(0)
     invoices.each do |invoice|
       if invoice.successful?
-        customer = merchant_repository.se.customer_repository.find_by(:id, invoice.customer_id)
+        customer_repository = merchant_repository.se.customer_repository
+        customer = customer_repository.find_by(:id, invoice.customer_id)
         customers[customer] += 1
       end
     end
@@ -57,7 +58,8 @@ class Merchant
     customers = []
     invoices.each do |invoice|
       if !invoice.successful?
-        customers << merchant_repository.se.customer_repository.find_by(:id, invoice.customer_id)
+        customer_repository = merchant_repository.se.customer_repository
+        customers << customer_repository.find_by(:id, invoice.customer_id)
       end
     end
     customers
