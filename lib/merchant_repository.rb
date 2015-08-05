@@ -2,14 +2,8 @@ require_relative 'repository'
 require_relative 'merchant'
 class MerchantRepository < Repository
 
-  attr_reader :se, :table , :quick_lookup_table
-
-  def initialize(sales_engine, csv_path)
-    @se = sales_engine
-    @table = []
-
-    map_data(Merchant,File.join(csv_path, "merchants.csv"))
-    @quick_lookup_table = populate_quick_lookup_table(@table)
+  def load_data(csv_path)
+    map_data(Merchant, File.join(csv_path, "merchants.csv"))
   end
 
   def most_revenue(merchant_count)
@@ -72,4 +66,5 @@ class MerchantRepository < Repository
     end
     output
   end
+
 end

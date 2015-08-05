@@ -3,13 +3,8 @@ require_relative 'transaction'
 
 class TransactionRepository < Repository
 
-  attr_reader :se, :table, :quick_lookup_table
-
-  def initialize(sales_engine, csv_path)
-    @se = sales_engine
-    @table = []
-    map_data(Transaction,File.join(csv_path, "transactions.csv"))
-    @quick_lookup_table = populate_quick_lookup_table(@table)
+  def load_data(csv_path)
+    map_data(Transaction, File.join(csv_path, "transactions.csv"))
   end
 
   def add_transaction(invoice_id, info)

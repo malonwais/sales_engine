@@ -13,14 +13,15 @@ class SalesEngine
               :transaction_repository, :invoice_item_repository,
                :merchant_repository, :item_repository, :csv_path
 
-  def initialize(csv_path=our_folder)
+  def initialize(csv_path = our_folder)
     @csv_path = csv_path
-
   end
+
   def our_folder
     our_root = File.expand_path('../..',  __FILE__)
     File.join our_root, "data"
   end
+
   def repository_startup
     @customer_repository = CustomerRepository.new(self, csv_path)
     @invoice_repository = InvoiceRepository.new(self, csv_path)
@@ -29,6 +30,7 @@ class SalesEngine
     @merchant_repository = MerchantRepository.new(self, csv_path)
     @item_repository = ItemRepository.new(self, csv_path)
   end
+
   def startup
     repository_startup
   end

@@ -2,13 +2,8 @@ require_relative 'repository'
 require_relative 'item'
 class ItemRepository < Repository
 
-  attr_reader :se, :table, :quick_lookup_table
-
-  def initialize(sales_engine, csv_path)
-    @se = sales_engine
-    @table = []
-    map_data(Item,File.join(csv_path, "items.csv"))
-    @quick_lookup_table = populate_quick_lookup_table(@table)
+  def load_data(csv_path)
+    map_data(Item, File.join(csv_path, "items.csv"))
   end
 
   def most_revenue(item_count)

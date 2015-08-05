@@ -2,13 +2,8 @@ require_relative 'repository'
 require_relative 'invoice'
 class InvoiceRepository < Repository
 
-  attr_reader :se, :table, :quick_lookup_table
-
-  def initialize(sales_engine, csv_path)
-    @se = sales_engine
-    @table = []
-    map_data(Invoice,File.join(csv_path, "invoices.csv"))
-    @quick_lookup_table = populate_quick_lookup_table(@table)
+  def load_data(csv_path)
+    map_data(Invoice, File.join(csv_path, "invoices.csv"))
   end
 
   def create(invoice_info)

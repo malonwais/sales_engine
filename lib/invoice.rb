@@ -29,22 +29,16 @@ class Invoice
 
   def items
     invoice_items.map do |invoice_item|
-        invoice_repository.se.item_repository.find_by(:id, invoice_item.item_id)
+      invoice_repository.se.item_repository.find_by(:id, invoice_item.item_id)
     end.uniq
   end
 
   def customer
     invoice_repository.se.customer_repository.find_by(:id, customer_id)
-    # repo_table(:customer_repo).find do |customer|
-    #   find_by(:id, invoice_id).customer_id == customer.id
-    # end
   end
 
   def merchant
     invoice_repository.se.merchant_repo.find_by(:id, merchant_id)
-    # repo_table(:merchant_repo).find do |merchant|
-    #   find_by(:id, invoice_id).merchant_id == merchant.id
-    # end
   end
 
   def revenue
