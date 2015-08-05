@@ -55,35 +55,27 @@ class MerchantRepository < Repo
   end
 
   def revenue_list
-
     invoice_item_repo = se.invoice_item_repository
     item_revenue_by_invoice = invoice_item_repo.item_data_by_invoice(:simple_revenue)
-    revenue_by_merchant(item_revenue_by_invoice)
-
+    data_by_merchant(item_revenue_by_invoice)
   end
-  def revenue_by_merchant(item_revenue_by_invoice)
+
+  def quantity_sold_list
+    invoice_item_repo = se.invoice_item_repository
+    item_quantity_by_invoice = invoice_item_repo.item_data_by_invoice(:quantity)
+    data_by_merchant(item_quantity_by_invoice)
+  end
+
+  def data_by_merchant(item_data_by_invoice)
     output = Hash.new(0)
-    item_revenue_by_invoice.each do |invoice_id, item_revenues|
+    item_data_by_invoice.each do |invoice_id, item_data|
       invoice = se.invoice_repository.find_by_id(invoice_id)
       if invoice.successful?
-        item_revenues.each do |item_id, revenue|
-          output[invoice.merchant_id] += revenue
-        end
+        item_data.each {|item_id, data| output[invoice.merchant_id] += data}
       end
     end
     output
   end
-
-  def quantity_sold_list
-    grouped_quantity_sold = Hash.new(0)
-    se.invoice_item_repository.all.each do |invoice_item|
-      merchant = invoice_item.merchant
-      quantity = invoice_item.quantity
-      grouped_quantity_sold[merchant] += quantity.to_i if invoice_item.successful?
-    end
-    grouped_quantity_sold
-  end
-
 
 
 
