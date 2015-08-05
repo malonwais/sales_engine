@@ -9,8 +9,9 @@ require 'pry'
 
 
 class SalesEngine
-  attr_reader :customer_repository, :invoice_repository, :transaction_repository,
-  :invoice_item_repository, :merchant_repository, :item_repository, :csv_path
+  attr_reader :customer_repository, :invoice_repository,
+              :transaction_repository, :invoice_item_repository,
+               :merchant_repository, :item_repository, :csv_path
 
   def initialize(csv_path=our_folder)
     @csv_path = csv_path
