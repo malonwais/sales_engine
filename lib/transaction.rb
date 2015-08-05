@@ -20,10 +20,8 @@ class Transaction
 
   def invoice
     transaction_repository.se.invoice_repository.find_by(:id, invoice_id)
-    # repo_table(:invoice_repo).find do |invoice|
-    #   find_by(:id, transaction_id).invoice_id == invoice.id
-    # end
   end
+  
   def successful?
     if result == "success"
       true

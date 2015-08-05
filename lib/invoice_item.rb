@@ -17,16 +17,10 @@ class InvoiceItem
   end
 
   def invoice
-    # invoice_item_repository.repo_table(:invoice_repo).find do |invoice|
-    #   find_by(:id, id).invoice_id == id
-    # end
     invoice_item_repository.se.invoice_repository.find_by(:id, invoice_id)
   end
 
   def item
-    # invoice_item_repository.repo_table(:item_repo).find do |item|
-    #   find_by(:id, id).item_id == id
-    # end
     invoice_item_repository.se.item_repository.find_by(:id, item_id)
   end
 
@@ -51,12 +45,5 @@ class InvoiceItem
 
     !transaction.nil? && transaction.successful?
   end
-
-  # def big_d(number)
-  #   dollars = number / 100
-  #   cents = number % 100
-  #
-  #   BigDecimal.new(dollars +.#{cents}")
-  # end
 
 end

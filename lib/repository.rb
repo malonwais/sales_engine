@@ -5,7 +5,15 @@ require 'bigdecimal'
 
 
 class Repository
-  # attr_reader :table
+  attr_reader :se, :table, :quick_lookup_table
+
+  def initialize(sales_engine, csv_path)
+    @se = sales_engine
+    @table = []
+    load_data(csv_path)
+    @quick_lookup_table = populate_quick_lookup_table(@table)
+  end
+
   include FindBy
   include FindAllBy
 
@@ -41,9 +49,6 @@ class Repository
 
   def find_by(symbol, hunt)
     quick_lookup_table[symbol][hunt]
-    # self.table.find do |thing|
-    #   thing.send(symbol) == hunt
-    # end
   end
 
   def find_all_by(symbol, hunt)

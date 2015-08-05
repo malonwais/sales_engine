@@ -2,14 +2,9 @@ require_relative 'repository'
 require_relative 'invoice_item'
 
 class InvoiceItemRepository < Repository
-  attr_reader :se, :table, :invoice_items, :quick_lookup_table
 
-  def initialize(sales_engine, csv_path)
-    @se = sales_engine
-    @table = []
-    @invoice_items =  @table
+  def load_data(csv_path)
     map_data(InvoiceItem, File.join(csv_path, "invoice_items.csv"))
-    @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
   def item_data_by_invoice(method_name)
@@ -30,7 +25,6 @@ class InvoiceItemRepository < Repository
     end
     output_hash
   end
-
 
   def items_values(data_by_invoice)
     output = Hash.new(0)
@@ -59,6 +53,5 @@ class InvoiceItemRepository < Repository
       @quick_lookup_table = populate_quick_lookup_table(table)
     end
   end
-
 
 end
