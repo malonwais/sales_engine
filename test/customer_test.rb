@@ -38,9 +38,9 @@ def test_invoices__it_returns_the_correct_invoices
 end
 
 def test_invoices__it_returns_an_empty_array_when_no_invoices_are_associated_with_the_customer
-  
+
   input_data = ['9892873429834','Fake','name','0932','09342']
-  
+
   customer = Customer.new(input_data, engine.customer_repository)
 
   assert_equal [], customer.invoices

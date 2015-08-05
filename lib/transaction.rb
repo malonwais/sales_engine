@@ -2,7 +2,7 @@ class Transaction
   attr_reader :id, :invoice_id, :credit_card_number,
   :credit_card_expiration_date,
   :result, :created_at, :updated_at,
-  :transaction_repository, :args
+  :transaction_repository, :fields
 
   def initialize(input_data, transaction_repository)
     @id = input_data[0].to_i
@@ -13,7 +13,7 @@ class Transaction
     @created_at = input_data[5]
     @updated_at = input_data[5]
     @transaction_repository = transaction_repository
-    @args = [:id, :invoice_id, :credit_card_number,
+    @fields = [:id, :invoice_id, :credit_card_number,
     :credit_card_expiration_date,
     :result, :created_at, :updated_at]
   end
@@ -28,8 +28,8 @@ class Transaction
     if result == "success"
       true
     else
-      repo = transaction_repository
-      other_transactions = repo.find_all_by(:invoice_id, invoice_id)
+      repository = transaction_repository
+      other_transactions = repository.find_all_by(:invoice_id, invoice_id)
       other_transactions.any? do |transaction|
         transaction.result == "success"
       end

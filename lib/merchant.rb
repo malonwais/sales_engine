@@ -1,35 +1,35 @@
 class Merchant
-  attr_reader :id, :name, :merchant_id, :merchant_repository, 
-              :created_at, :updated_at, :args
-  
+  attr_reader :id, :name, :merchant_id, :merchant_repository,
+              :created_at, :updated_at, :fields
+
   def initialize(input_data, merchant_repository)
     @id = input_data[0].to_i
     @name = input_data[1]
     @created_at = input_data[2]
     @updated_at = input_data[3]
     @merchant_repository = merchant_repository
-    @args = [:id, :name, :merchant_id,
+    @fields = [:id, :name, :merchant_id,
                 :created_at, :updated_at]
   end
-  
+
   def items
     # merchant_repository.se.item_repo.find_all_by(:merchant_id, id)
     merchant_repository.repo_table(:item_repository).select do |item|
       item.merchant_id == id
     end
   end
-  
+
   def invoices
     merchant_repository.se.invoice_repository.find_all_by(:merchant_id, id)
   end
-  
+
   def revenue(date = false)
     set_of_invoices = if date
       if date.class == Date
         date = date.strftime("%Y-%m-%d")
       else
         date = Date.parse(date).strftime("%Y-%m-%d")
-      end       
+      end
       invoices.select do |invoice|
         invoice.created_at[0..9] == date
       end
@@ -41,7 +41,7 @@ class Merchant
     end
     output * 0.01
   end
-  
+
   def favorite_customer
     customers = Hash.new(0)
     invoices.each do |invoice|
@@ -52,7 +52,7 @@ class Merchant
     end
     customers.sort_by{|customer, count| count}.reverse[0][0]
   end
-  
+
   def customers_with_pending_invoices
     customers = []
     invoices.each do |invoice|
@@ -65,6 +65,6 @@ class Merchant
   def inspect
     self.class
   end
-  
-  
+
+
 end

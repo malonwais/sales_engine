@@ -1,15 +1,15 @@
-require_relative 'repo'
+require_relative 'repository'
 require_relative 'transaction'
 
-class TransactionRepository < Repo
+class TransactionRepository < Repository
 
-  attr_reader :se, :table, :hash
+  attr_reader :se, :table, :quick_lookup_table
 
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
     map_data(Transaction,'../sales_engine/data/transactions.csv')
-    @hash = populate_hash(@table)
+    @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
 end

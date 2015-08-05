@@ -1,15 +1,15 @@
-require_relative 'repo'
+require_relative 'repository'
 require_relative 'merchant'
-class MerchantRepository < Repo
+class MerchantRepository < Repository
 
-  attr_reader :se, :table , :hash
+  attr_reader :se, :table , :quick_lookup_table
 
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
 
     map_data(Merchant,'../sales_engine/data/merchants.csv')
-    @hash = populate_hash(@table)
+    @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
   def most_revenue(merchant_count)
@@ -43,26 +43,22 @@ class MerchantRepository < Repo
   end
 
   def ranked_merchants(merchant_list)
-    merchant_list.sort_by do |merchant, quantity|
-      quantity
-    end.reverse!
+    merchant_list.sort_by{|merchant, quantity| quantity}.reverse
   end
 
   def top_merchants(count, merchants)
-    merchants[0..count - 1].map do |merchant_rank|
-      find_by_id(merchant_rank.first)
-    end
+    merchants[0..count - 1].map{|merchant_rank| find_by_id(merchant_rank.first)}
   end
 
   def revenue_list
-    invoice_item_repo = se.invoice_item_repository
-    item_revenue_by_invoice = invoice_item_repo.item_data_by_invoice(:simple_revenue)
+    invoice_item_repository = se.invoice_item_repository
+    item_revenue_by_invoice = invoice_item_repository.item_data_by_invoice(:simple_revenue)
     data_by_merchant(item_revenue_by_invoice)
   end
 
   def quantity_sold_list
-    invoice_item_repo = se.invoice_item_repository
-    item_quantity_by_invoice = invoice_item_repo.item_data_by_invoice(:quantity)
+    invoice_item_repository = se.invoice_item_repository
+    item_quantity_by_invoice = invoice_item_repository.item_data_by_invoice(:quantity)
     data_by_merchant(item_quantity_by_invoice)
   end
 
