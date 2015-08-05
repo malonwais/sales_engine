@@ -1,59 +1,65 @@
 require_relative 'repo'
 require_relative 'merchant'
 class MerchantRepository < Repo
-  
+
   attr_reader :se, :table , :hash
-  
+
   def initialize(sales_engine)
     @se = sales_engine
     @table = []
-    
+
     map_data(Merchant,'../sales_engine/data/merchants.csv')
     @hash = populate_hash(@table)
   end
-  
 
-  
-  
-  
-  
   def most_revenue(merchant_count)
-    start =   Time.now
     top_merchants(merchant_count, ranked_merchants(revenue_list))
   end
-  
+
   def most_items(merchant_count)
-    start = Time.now
-    result = top_merchants(merchant_count, ranked_merchants(quantity_sold_list))
-    puts Time.now - start
-    result
+    top_merchants(merchant_count, ranked_merchants(quantity_sold_list))
   end
-  
+
   def revenue(date)
-    invoice_items = se.invoice_item_repository.find_all_by_date(:created_at, date)
-    invoice_items.reduce(0) do |sum, invoice_item|
-      sum + invoice_item.revenue
+    date = good_date(date)
+    total = 0
+
+    revenue_by_invoice.each do |invoice_id, revenue|
+      invoice = se.invoice_repository.find_by(:id, invoice_id)
+      if invoice.successful? && good_date(invoice.created_at) == date
+          total += revenue
+      end
     end
+    total * 0.01
   end
-  
+
+  def revenue_by_invoice
+    invoices = Hash.new(0)
+    se.invoice_item_repository.all.each do |invoice_item|
+      invoice_id = invoice_item.invoice_id
+      invoices[invoice_id] += invoice_item.simple_revenue
+    end
+    invoices
+  end
+
   def ranked_merchants(merchant_list)
     merchant_list.sort_by do |merchant, quantity|
       quantity
     end.reverse!
   end
-  
+
   def top_merchants(count, merchants)
     merchants[0..count - 1].map do |merchant_rank|
       find_by_id(merchant_rank.first)
     end
   end
-  
+
   def revenue_list
-    
+
     invoice_item_repo = se.invoice_item_repository
     item_revenue_by_invoice = invoice_item_repo.item_data_by_invoice(:simple_revenue)
     revenue_by_merchant(item_revenue_by_invoice)
-    
+
   end
   def revenue_by_merchant(item_revenue_by_invoice)
     output = Hash.new(0)
@@ -67,7 +73,7 @@ class MerchantRepository < Repo
     end
     output
   end
-  
+
   def quantity_sold_list
     grouped_quantity_sold = Hash.new(0)
     se.invoice_item_repository.all.each do |invoice_item|
@@ -77,13 +83,13 @@ class MerchantRepository < Repo
     end
     grouped_quantity_sold
   end
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   # def group_invoices_with_merchant
   #   repo_table(:invoice_repo).group_by do |invoice|
   #     invoice.merchant_id
@@ -101,7 +107,7 @@ class MerchantRepository < Repo
   #      invoice_item.invoice_id
   #    end
   #  end
-  
+
   # def total_inv_item_price(i_item)
   #   i_item.unit_price.to_i * i_item.quantity.to_i
   # end
@@ -157,8 +163,8 @@ class MerchantRepository < Repo
   #   group_invoice_items_with_invoice
   #
   # end
-  
-  
-  
-  
+
+
+
+
 end
