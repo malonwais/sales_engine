@@ -11,18 +11,7 @@ class MerchantRepository < Repo
     map_data(Merchant,'../sales_engine/data/merchants.csv')
     @hash = populate_hash(@table)
   end
-  def populate_hash(table)
-    output = Hash.new({})
-    table.reverse!
-    table.each do |record|
-      # puts record.id
-      output[:id][record.id] = record
-      output[:name][record.name] = record
-      output[:created_at][record.created_at] = record
-      output[:updated_at][record.updated_at] = record
-      
-    end
-  end
+  
 
   
   
