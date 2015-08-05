@@ -23,28 +23,39 @@ class Item
     item_repository.se.merchant_repository.find_by(:id, merchant_id)
 
   end
-  def best_day(invoice_date)
-    invoice_ids = engine.invoice_item_repository.item_data_by_invoice(:simple_revenue)
-    dates = {}
-    invoice_ids.each do |invoice_id, revenues|
-      if item_repository.se.invoice_repository.find_by(:id, invoice_id).successful?
 
-        revenues.reduce
-
-
-      end
-
-    end
-
-
-    dates = group.group_by do |invoice_id,data|
-      invoice = engine.invoice_repository.find_by(:id, invoice_id)
-      invoice.invoice_repository.good_date(invoice.created_at)
-    end
-
-
-
+  def best_day
+    Date.parse(ranked_revenue_by_date.first[0])
   end
+
+  def ranked_revenue_by_date
+  	revenue_by_date.sort_by{|date, revenue| revenue}.reverse
+  end
+
+  def revenue_by_date
+    dates = Hash.new(0)
+    revenues_by_invoice_id.each do |invoice_id, revenue|
+      invoice = item_repository.se.invoice_repository.find_by(:id, invoice_id)
+      if invoice.successful?
+        date = item_repository.good_date(invoice.created_at)
+        dates[date] += revenue.to_f
+      end
+    end
+    dates
+  end
+
+  def revenues_by_invoice_id
+  	invoice_ids = Hash.new(0)
+    invoice_items = item_repository.se.invoice_item_repository.all
+
+    invoice_items.each do |invoice_item|
+      if id == invoice_item.item_id
+        invoice_ids[invoice_item.invoice_id] += invoice_item.simple_revenue
+      end
+    end
+    invoice_ids
+  end
+
   def get_invoice_item_quantity
     # item_repository.se.invoice_items.each do |invoice_item|
     #
