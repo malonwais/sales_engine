@@ -21,7 +21,6 @@ class Item
 
   def merchant
     item_repository.se.merchant_repository.find_by(:id, merchant_id)
-
   end
 
   def best_day
@@ -54,13 +53,6 @@ class Item
       end
     end
     invoice_ids
-  end
-
-  def get_invoice_item_quantity
-    # item_repository.se.invoice_items.each do |invoice_item|
-    #
-    # end
-    0
   end
 
 end

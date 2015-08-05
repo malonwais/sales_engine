@@ -13,10 +13,7 @@ class Merchant
   end
 
   def items
-    # merchant_repository.se.item_repo.find_all_by(:merchant_id, id)
-    merchant_repository.repo_table(:item_repository).select do |item|
-      item.merchant_id == id
-    end
+    merchant_repository.se.item_repository.find_all_by(:merchant_id, id)
   end
 
   def invoices
@@ -64,9 +61,9 @@ class Merchant
     end
     customers
   end
+  
   def inspect
     self.class
   end
-
 
 end
