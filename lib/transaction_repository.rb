@@ -23,7 +23,7 @@ class TransactionRepository < Repository
     new_record = [new_id, invoice_id, cc_number, cc_exp, result, created_at, updated_at]
     new_transaction = Transaction.new(new_record, self)
     table << new_transaction
-    quick_lookup_table = populate_quick_lookup_table(table)
+    @quick_lookup_table = populate_quick_lookup_table(table)
     new_transaction
   end
 

@@ -22,15 +22,11 @@ class Repository
 
   def populate_quick_lookup_table(table)
     output = Hash.new()
-    table[0].fields.each do |field|
-      output[field] = {}
-    end
+    table[0].fields.each{ |field| output[field] = {} }
 
     table.reverse!
     table.each do |record|
-      record.fields.each do |field|
-        output[field][record.send(field)] = record
-      end
+      record.fields.each{|field| output[field][record.send(field)] = record}
     end
     output
   end
