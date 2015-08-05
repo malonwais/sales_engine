@@ -16,6 +16,7 @@ class Customer
   def invoices
     @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
   end
+  
   def transactions
     customer_transactions =  []
     invoices.each do |invoice|
