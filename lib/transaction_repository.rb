@@ -5,7 +5,7 @@ class TransactionRepository < Repository
 
   attr_reader :se, :table, :quick_lookup_table
 
-  def initialize(sales_engine)
+  def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
     map_data(Transaction,'../sales_engine/data/transactions.csv')

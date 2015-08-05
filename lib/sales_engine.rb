@@ -10,34 +10,34 @@ require 'pry'
 
 class SalesEngine
   attr_reader :customer_repository, :invoice_repository, :transaction_repository,
-  :invoice_item_repository, :merchant_repository, :item_repository
-
-  def initialize(thing1=0, thing2=0)
-
+  :invoice_item_repository, :merchant_repository, :item_repository, :csv_path
+  
+  def initialize(csv_path=our_folder)
+    @csv_path = csv_path
+    
   end
-
+  def our_folder
+    our_root = File.expand_path('../..',  __FILE__)
+    File.join our_root, "data"
+  end
+  
   def repository_startup
-    @customer_repository = CustomerRepository.new(self)
-    @invoice_repository = InvoiceRepository.new(self)
-    @transaction_repository = TransactionRepository.new(self)
-    @invoice_item_repository = InvoiceItemRepository.new(self)
-    @merchant_repository = MerchantRepository.new(self)
-    @item_repository = ItemRepository.new(self)
+    @customer_repository = CustomerRepository.new(self, csv_path)
+    @invoice_repository = InvoiceRepository.new(self, csv_path)
+    @transaction_repository = TransactionRepository.new(self, csv_path)
+    @invoice_item_repository = InvoiceItemRepository.new(self, csv_path)
+    @merchant_repository = MerchantRepository.new(self, csv_path)
+    @item_repository = ItemRepository.new(self, csv_path)
   end
-
-  # def intel_startup
-  #   MerchantRepoIntel.new(self)
-  # end
-
   def startup
     repository_startup
-    # intel_startup
   end
-
+  
 end
 
 engine = SalesEngine.new()
 engine.startup
 if __FILE__ == $0
+  puts "Using csv folder.... #{engine.csv_path}"
   binding.pry
 end

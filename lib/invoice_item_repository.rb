@@ -4,7 +4,7 @@ require_relative 'invoice_item'
 class InvoiceItemRepository < Repository
   attr_reader :se, :table, :invoice_items, :quick_lookup_table
 
-  def initialize(sales_engine)
+  def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
     @invoice_items =  @table
