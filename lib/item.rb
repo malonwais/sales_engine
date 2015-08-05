@@ -6,7 +6,7 @@ class Item
     @id = input_data[0].to_i
     @name = input_data[1]
     @description = input_data[2]
-    @unit_price = BigDecimal.new(input_data[3]) 
+    @unit_price = BigDecimal.new(input_data[3])
     @merchant_id = input_data[4].to_i
     @created_at = input_data[5]
     @updated_at = input_data[6]
@@ -19,19 +19,35 @@ class Item
 
   def merchant
     item_repository.se.merchant_repository.find_by(:id, merchant_id)
-    
+
   end
   def best_day(invoice_date)
-    
-    #from the item we have to get to invoice items i think
-    
-    #I still have to detect only successful transactions
+    invoice_ids = engine.invoice_item_repository.item_data_by_invoice(:simple_revenue)
+    dates = {}
+    invoice_ids.each do |invoice_id, revenues|
+      if item_repository.se.invoice_repository.find_by(:id, invoice_id).successful?
+
+        revenues.reduce
+
+
+      end
+
+    end
+
+
+    dates = group.group_by do |invoice_id,data|
+      invoice = engine.invoice_repository.find_by(:id, invoice_id)
+      invoice.invoice_repository.good_date(invoice.created_at)
+    end
+
+
+
   end
   def get_invoice_item_quantity
     # item_repository.se.invoice_items.each do |invoice_item|
-    # 
+    #
     # end
     0
   end
-  
+
 end

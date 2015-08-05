@@ -1,7 +1,7 @@
 
 class Customer
   attr_reader :id, :first_name, :last_name,
-              :created_at, :updated_at, :customer_repository
+              :created_at, :updated_at, :customer_repository, :args
 
   def initialize(input_data, customer_repository)
     @id = input_data[0].to_i
@@ -10,6 +10,8 @@ class Customer
     @created_at = input_data[3]
     @updated_at = input_data[4]
     @customer_repository = customer_repository
+    @args = [:id, :first_name, :last_name,
+                :created_at, :updated_at]
   end
 
   def invoices

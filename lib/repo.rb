@@ -20,6 +20,21 @@ class Repo
     @table.shift #removes header info
   end
 
+  def populate_hash(table)
+    output = Hash.new()
+    table[0].args.each do |arg|
+      output[arg] = {}
+    end
+
+    table.reverse!
+    table.each do |record|
+      record.args.each do |arg|
+        output[arg][record.send(arg)] =  record
+      end
+    end
+    output
+  end
+
   def all
     @table
   end
@@ -29,9 +44,10 @@ class Repo
   end
 
   def find_by(symbol, hunt)
-    self.table.find do |thing|
-      thing.send(symbol) == hunt
-    end
+    hash[symbol][hunt]
+    # self.table.find do |thing|
+    #   thing.send(symbol) == hunt
+    # end
   end
 
   def find_all_by(symbol, hunt)
@@ -57,7 +73,7 @@ class Repo
   def repo_table(symbol_thing)
     @se.send(symbol_thing).table
   end
-  
+
   def inspect
     self.Class
   end

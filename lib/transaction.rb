@@ -2,7 +2,7 @@ class Transaction
   attr_reader :id, :invoice_id, :credit_card_number,
   :credit_card_expiration_date,
   :result, :created_at, :updated_at,
-  :transaction_repository
+  :transaction_repository, :args
 
   def initialize(input_data, transaction_repository)
     @id = input_data[0].to_i
@@ -13,6 +13,9 @@ class Transaction
     @created_at = input_data[5]
     @updated_at = input_data[5]
     @transaction_repository = transaction_repository
+    @args = [:id, :invoice_id, :credit_card_number,
+    :credit_card_expiration_date,
+    :result, :created_at, :updated_at]
   end
 
   def invoice
