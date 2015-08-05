@@ -71,7 +71,7 @@ class Repository
   end
 
   def inspect
-    self.Class
+    self.class
   end
 
 end
