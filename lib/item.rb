@@ -1,6 +1,6 @@
 class Item
   attr_reader :id, :name, :description, :unit_price, :merchant_id, :created_at,
-              :updated_at, :item_repository
+              :updated_at, :item_repository, :args
 
   def initialize(input_data, item_repository)
     @id = input_data[0].to_i
@@ -11,6 +11,8 @@ class Item
     @created_at = input_data[5]
     @updated_at = input_data[6]
     @item_repository = item_repository
+    @args = [:id, :name, :description, :unit_price, :merchant_id, :created_at,
+                :updated_at]
   end
 
   def invoice_items
