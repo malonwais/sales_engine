@@ -1,7 +1,7 @@
 class Invoice
   attr_reader :id, :customer_id, :merchant_id,
               :status, :created_at, :updated_at,
-              :invoice_repository
+              :invoice_repository, :args
 
   def initialize(input_data, invoice_repository)
     @id = input_data[0].to_i
@@ -11,6 +11,8 @@ class Invoice
     @created_at = input_data[4]
     @updated_at = input_data[5]
     @invoice_repository = invoice_repository
+    @args = [:id, :customer_id, :merchant_id,
+                :status, :created_at, :updated_at]
   end
 
   def transactions
