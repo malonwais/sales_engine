@@ -25,7 +25,7 @@ class InvoiceItem
   end
 
   def revenue
-    if successful? then quantity * unit_price else 0 end
+    if successful? then BigDecimal.new(quantity) * unit_price else 0 end
   end
 
   def simple_revenue
