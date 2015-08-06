@@ -14,6 +14,7 @@ class Repository
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
 
+
   include FindBy
   include FindAllBy
 

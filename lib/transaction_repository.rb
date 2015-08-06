@@ -2,7 +2,7 @@ require_relative 'repository'
 require_relative 'transaction'
 
 class TransactionRepository < Repository
-
+  
   def load_data(csv_path)
     map_data(Transaction, File.join(csv_path, "transactions.csv"))
   end

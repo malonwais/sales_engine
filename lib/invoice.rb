@@ -56,12 +56,12 @@ class Invoice
       false
     elsif transaction.successful?
       true
-    elsif !transaction.nil?
-      transactions = transaction_repository.all
-      next_index = transactions.index(transaction) + 1
-      transaction_repository.all[next_index..-1].any? do |transaction|
-        transaction.invoice_id == id && transaction.successful?
-      end
+    # elsif !transaction.nil?
+    #   transactions = transaction_repository.all
+    #   next_index = transactions.index(transaction) + 1
+    #   transaction_repository.all[next_index..-1].any? do |transaction|
+    #     transaction.invoice_id == id && transaction.successful?
+    #   end
     end
 
   end
