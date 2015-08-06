@@ -94,5 +94,26 @@ class InvoiceItemTest < MiniTest::Test
     assert_equal "Schroeder-Jerde", invoice_item.merchant.name
     
   end
+  def test_successful_it_returns_false_when_it_was_part_of_a_transaction_that_never_succeeded
+    
+    input_data = ['1', '1', '13', '1', '1', '1', '1']
+    invoice_item = InvoiceItem.new(input_data, engine.invoice_item_repository)
+    refute invoice_item.successful?
+    
+  end
+  def test_successful_it_returns_false_when_there_is_no_such_transaction
+    
+    input_data = ['1', '1', '9999', '1', '1', '1', '1']
+    invoice_item = InvoiceItem.new(input_data, engine.invoice_item_repository)
+    refute invoice_item.successful?
+    
+  end
+  def test_successful_it_returns_true_when_the_transaction_was_successful
+    
+    input_data = ['1', '1', '2', '1', '1', '1', '1']
+    invoice_item = InvoiceItem.new(input_data, engine.invoice_item_repository)
+    assert invoice_item.successful?
+    
+  end
   
 end
