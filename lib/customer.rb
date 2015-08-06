@@ -1,7 +1,7 @@
 class Customer
   attr_reader :id, :first_name, :last_name,
   :created_at, :updated_at, :customer_repository, :fields
-  
+
   def initialize(input_data, customer_repository)
     @id = input_data[0].to_i
     @first_name = input_data[1]
@@ -16,7 +16,7 @@ class Customer
   def invoices
     @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
   end
-  
+
   def transactions
     customer_transactions = []
     invoices.each do |invoice|
@@ -25,7 +25,7 @@ class Customer
       customer_transactions << transaction
     end
   end
-    
+
     def invoices
       @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
     end
@@ -50,5 +50,5 @@ class Customer
       return nil if merchants.empty?
       merchants.sort_by{|merchant, count| count}.reverse[0][0]
     end
-    
+
   end
