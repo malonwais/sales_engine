@@ -3,17 +3,16 @@ require_relative 'modules/find_by'
 require_relative 'modules/find_all_by'
 require 'bigdecimal'
 
-
 class Repository
   attr_reader :se, :table, :quick_lookup_table
 
   def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
+    @reversed = false
     load_data(csv_path)
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
-
 
   include FindBy
   include FindAllBy
@@ -33,9 +32,13 @@ class Repository
     output = Hash.new()
     table[0].fields.each{ |field| output[field] = {} }
 
-    table.reverse!
+    if !@reversed
+      table.reverse!
+      @reversed = true
+    end
+
     table.each do |record|
-      record.fields.each{|field| output[field][record.send(field)] = record}
+      record.fields.each{|field| output[field][record.send(field)] ||= record }
     end
     output
   end
