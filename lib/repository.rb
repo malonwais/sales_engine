@@ -9,7 +9,6 @@ class Repository
   def initialize(sales_engine, csv_path)
     @se = sales_engine
     @table = []
-    @reversed = false
     load_data(csv_path)
     @quick_lookup_table = populate_quick_lookup_table(@table)
   end
@@ -31,11 +30,6 @@ class Repository
   def populate_quick_lookup_table(table)
     output = Hash.new()
     table[0].fields.each{ |field| output[field] = {} }
-
-    if !@reversed
-      table.reverse!
-      @reversed = true
-    end
 
     table.each do |record|
       record.fields.each{|field| output[field][record.send(field)] ||= record }

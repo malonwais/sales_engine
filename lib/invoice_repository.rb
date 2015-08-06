@@ -14,12 +14,12 @@ class InvoiceRepository < Repository
     created_at = Time.now.utc.to_s
     updated_at = created_at
     items = invoice_info[:items]
-    new_id = table.first.id + 1
+    new_id = table.last.id + 1
 
     new_record = [new_id, customer_id, merchant_id,
                   status, created_at, updated_at]
     new_invoice = Invoice.new(new_record, self)
-    table.unshift(new_invoice)
+    table.push(new_invoice)
     @quick_lookup_table = populate_quick_lookup_table(table)
 
     se.invoice_item_repository.add_invoice_items(items, new_id)
