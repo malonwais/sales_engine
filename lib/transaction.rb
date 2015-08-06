@@ -21,17 +21,9 @@ class Transaction
   def invoice
     transaction_repository.se.invoice_repository.find_by(:id, invoice_id)
   end
-  
+
   def successful?
-    if result == "success"
-      true
-    else
-      repository = transaction_repository
-      other_transactions = repository.find_all_by(:invoice_id, invoice_id)
-      other_transactions.any? do |transaction|
-        transaction.result == "success"
-      end
-    end
+    result == "success"
   end
 
 end

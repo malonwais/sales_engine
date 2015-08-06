@@ -11,7 +11,20 @@ class Customer
     @customer_repository = customer_repository
     @fields = [:id, :first_name, :last_name,
       :created_at, :updated_at]
+  end
+
+  def invoices
+    @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
+  end
+  
+  def transactions
+    customer_transactions = []
+    invoices.each do |invoice|
+      transaction_repository = @customer_repository.se.transaction_repository
+      transaction = transaction_repository.find_all_by_invoice_id(invoice.id)
+      customer_transactions << transaction
     end
+  end
     
     def invoices
       @customer_repository.se.invoice_repository.find_all_by_customer_id(id)
