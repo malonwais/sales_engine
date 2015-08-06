@@ -40,7 +40,7 @@ class InvoiceItem
   end
 
   def successful?
-  	invoice_repository = invoice_item_repository.se.invoice_repository
+    invoice_repository = invoice_item_repository.se.invoice_repository
     invoice = invoice_repository.find_by(:id, invoice_id)
 
     invoice && invoice.successful?
