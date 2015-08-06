@@ -21,8 +21,8 @@ class MerchantTest < MiniTest::Test
     item_ids = merchant.items.map {|item| item.id}
     unit_prices = merchant.items.map {|item| item.unit_price}
 
-    assert_equal [209, 208, 207], item_ids
-    assert_equal [BigDecimal.new(23092), BigDecimal.new(48543), BigDecimal.new(32427)], unit_prices
+    assert_equal [207, 208, 209], item_ids
+    assert_equal [BigDecimal.new(32427), BigDecimal.new(48543), BigDecimal.new(23092)], unit_prices
   end
 
   def test_items__it_returns_an_empty_array_when_no_items_are_associated_with_the_merchant

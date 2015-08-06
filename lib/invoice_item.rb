@@ -41,7 +41,9 @@ class InvoiceItem
 
   def successful?
   	invoice_repository = invoice_item_repository.se.invoice_repository
-    invoice_repository.find_by(:id, invoice_id).successful?
+    invoice = invoice_repository.find_by(:id, invoice_id)
+
+    invoice && invoice.successful?
   end
 
 end
