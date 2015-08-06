@@ -1,5 +1,6 @@
 require_relative 'repository'
 require_relative 'item'
+
 class ItemRepository < Repository
 
   def load_data(csv_path)

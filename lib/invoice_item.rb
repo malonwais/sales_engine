@@ -40,10 +40,10 @@ class InvoiceItem
   end
 
   def successful?
-    transaction_repository = invoice_item_repository.se.transaction_repository
-    transaction = transaction_repository.find_by(:invoice_id, invoice_id)
+  	invoice_repository = invoice_item_repository.se.invoice_repository
+    invoice = invoice_repository.find_by(:id, invoice_id)
 
-    !transaction.nil? && transaction.successful?
+    invoice && invoice.successful?
   end
 
 end

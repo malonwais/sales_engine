@@ -2,18 +2,22 @@ require_relative 'test_helper'
 
 
 class SalesEngineTest < MiniTest::Test
+
   def test_we_can_join_a_default_path
     engine = SalesEngine.new
     assert engine.csv_path
   end
+
   def test_we_can_join_a_non_default_path
     engine = SalesEngine.new("./data")
     assert_equal "./data", engine.csv_path
   end
+
   def test_we_can_join_a_non_default_path2
     engine = SalesEngine.new("asdf")
     assert_equal "asdf", engine.csv_path
   end
+
   def test_it_starts_up_a_new_sales_engine
     engine = SalesEngine.new
     engine.startup

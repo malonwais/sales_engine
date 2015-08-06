@@ -22,8 +22,8 @@ class ItemTest < MiniTest::Test
       invoice_item_ids = item.invoice_items.map {|invoice_item| invoice_item.id}
       quantities = item.invoice_items.map {|invoice_item| invoice_item.quantity}
 
-      assert_equal [21229, 13497], invoice_item_ids[0..1]
-      assert_equal [4, 1], quantities[0..1]
+      assert_equal [57, 60], invoice_item_ids[0..1]
+      assert_equal [2, 3], quantities[0..1]
     end
 
     def test_invoice_items__it_returns_an_empty_array_when_no_invoice_items_are_associated_with_item

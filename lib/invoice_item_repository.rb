@@ -42,14 +42,14 @@ class InvoiceItemRepository < Repository
     item_counts = items_by_id.map{|id, items| [id, items.count]}
 
     item_counts.each do |item_id, quantity|
-      new_id = table[-1].id + 1
+      new_id = table.last.id + 1
       unit_price = se.item_repository.find_by(:id, item_id).unit_price
       created_at = Time.now.utc.to_s
       updated_at = created_at
 
       new_record = [new_id, item_id, invoice_id, quantity, unit_price,
                     created_at, updated_at]
-      table << InvoiceItem.new(new_record, self)
+      table.push(InvoiceItem.new(new_record, self))
       @quick_lookup_table = populate_quick_lookup_table(table)
     end
   end

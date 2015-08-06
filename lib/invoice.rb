@@ -44,8 +44,8 @@ class Invoice
   def revenue
     invoice_item_repository = invoice_repository.se.invoice_item_repository
     invoice_items = invoice_item_repository.find_all_by(:invoice_id, id)
-    start_num = BigDecimal.new(0)
-    total = invoice_items.reduce(start_num) do |sum, invoice_item| 
+    # start_num = BigDecimal.new(0)
+    total = invoice_items.reduce(0) do |sum, invoice_item|
       sum + invoice_item.revenue
     end
   end
@@ -58,12 +58,12 @@ class Invoice
       false
     elsif transaction.successful?
       true
-    # elsif !transaction.nil?
-    #   transactions = transaction_repository.all
-    #   next_index = transactions.index(transaction) + 1
-    #   transaction_repository.all[next_index..-1].any? do |transaction|
-    #     transaction.invoice_id == id && transaction.successful?
-    #   end
+    elsif !transaction.nil?
+      transactions = transaction_repository.all
+      next_index = transactions.index(transaction) + 1
+      transaction_repository.all[next_index..-1].any? do |transaction|
+        transaction.invoice_id == id && transaction.successful?
+      end
     end
 
   end

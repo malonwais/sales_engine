@@ -22,21 +22,17 @@ class Merchant
 
   def revenue(date = false)
     set_of_invoices = if date
-      if date.class == Date
-        date = date.strftime("%Y-%m-%d")
-      else
-        date = Date.parse(date).strftime("%Y-%m-%d")
-      end
-      invoices.select do |invoice|
-        invoice.created_at[0..9] == date
-      end
+      date = Date.parse(date) if date.class != Date
+      date = date.strftime("%Y-%m-%d")
+      invoices.select{|invoice| invoice.created_at[0..9] == date}
     else
       invoices
     end
-    output = set_of_invoices.reduce(0) do |sum, invoice|
+
+    total = set_of_invoices.reduce(0) do |sum, invoice|
       sum + invoice.revenue
     end
-    output * 0.01
+    total * 0.01
   end
 
   def favorite_customer
@@ -61,7 +57,7 @@ class Merchant
     end
     customers
   end
-  
+
   def inspect
     self.class.to_s
   end
