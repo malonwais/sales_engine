@@ -32,7 +32,6 @@ class ItemTest < MiniTest::Test
 
       assert_equal [], item.invoice_items
     end
-
     def test_merchant__it_can_pull_a_merchant
       item = engine.item_repository.find_by(:id, 127)
 
