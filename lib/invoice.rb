@@ -38,14 +38,16 @@ class Invoice
   end
 
   def merchant
-    invoice_repository.se.merchant_repo.find_by(:id, merchant_id)
+    invoice_repository.se.merchant_repository.find_by(:id, merchant_id)
   end
 
   def revenue
     invoice_item_repository = invoice_repository.se.invoice_item_repository
     invoice_items = invoice_item_repository.find_all_by(:invoice_id, id)
-
-    invoice_items.reduce(0) {|sum, invoice_item| sum + invoice_item.revenue}
+    start_num = BigDecimal.new(0)
+    total = invoice_items.reduce(start_num) do |sum, invoice_item| 
+      sum + invoice_item.revenue
+    end
   end
 
   def successful?
@@ -56,12 +58,12 @@ class Invoice
       false
     elsif transaction.successful?
       true
-    elsif !transaction.nil?
-      transactions = transaction_repository.all
-      next_index = transactions.index(transaction) + 1
-      transaction_repository.all[next_index..-1].any? do |transaction|
-        transaction.invoice_id == id && transaction.successful?
-      end
+    # elsif !transaction.nil?
+    #   transactions = transaction_repository.all
+    #   next_index = transactions.index(transaction) + 1
+    #   transaction_repository.all[next_index..-1].any? do |transaction|
+    #     transaction.invoice_id == id && transaction.successful?
+    #   end
     end
 
   end

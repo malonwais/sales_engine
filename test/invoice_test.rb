@@ -10,23 +10,23 @@ class InvoiceTest < MiniTest::Test
     end
 
     def test_transactions__it_gets_an_array_of_them
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal Array, invoice.transactions.class
       assert invoice.transactions.all?{|transaction| transaction.class == Transaction}
     end
 
     def test_transactions__it_gets_the_correct_ones
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
       transaction_ids = invoice.transactions.map {|transaction| transaction.id}
       cc_numbers = invoice.transactions.map {|transaction| transaction.credit_card_number}
 
-      assert_equal ['11', '12', '13'], transaction_ids
-    	assert_equal ['4800749911485986', '4017503416578382', '4536896898764278'], cc_numbers
+      assert_equal [13, 12, 11], transaction_ids
+    	assert_equal ["4536896898764278", "4017503416578382", "4800749911485986"], cc_numbers
     end
 
     def test_transactions__it_returns_an_empty_array_when_no_transactions_are_associated_with_the_invoice
-      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      input_data = ['999999', '9999999', '9999999', 'success', '99999999', '99999999']
       invoice = Invoice.new(input_data, engine.invoice_repository)
 
 
@@ -34,24 +34,26 @@ class InvoiceTest < MiniTest::Test
     end
 
     def test_invoice_items__it_gets_an_array_of_them
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal Array, invoice.invoice_items.class
       assert invoice.invoice_items.all?{|invoice_item| invoice_item.class == InvoiceItem}
     end
 
     def test_invoice_items__it_gets_the_correct_ones
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
       invoice_item_ids = invoice.invoice_items.map {|invoice_item| invoice_item.id}
       item_prices = invoice.invoice_items.map {|invoice_item| invoice_item.unit_price}
 
-      assert_equal ['56', '57', '58', '59', '60', '61'], invoice_item_ids
-      assert_equal ['78031', '41702', '71340', '7196', '41702', '22546'], item_prices
+      assert_equal [61, 60, 59, 58, 57, 56], invoice_item_ids
+      assert_equal [BigDecimal.new(78031), BigDecimal.new(41702), 
+                    BigDecimal.new(71340), BigDecimal.new(7196), 
+                    BigDecimal.new(41702), BigDecimal.new(22546)].reverse, item_prices
     end
 
     def test_invoice_items__it_returns_an_empty_array_when_no_invoice_items_are_associated_with_the_invoice
 
-      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      input_data = ['999999', '999999', '99999999', 'success', '999999999', '99999999']
       invoice = Invoice.new(input_data, engine.invoice_repository)
 
 
@@ -59,7 +61,7 @@ class InvoiceTest < MiniTest::Test
     end
 
     def test_items__it_gets_an_array_of_items
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal Array, invoice.items.class
       assert invoice.items.all?{|item| item.class == Item}
@@ -67,40 +69,40 @@ class InvoiceTest < MiniTest::Test
     end
 
     def test_items__it_gets_the_correct_items
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
       item_ids = invoice.items.map {|item| item.id}
       item_prices = invoice.items.map {|item| item.unit_price}
 
-      assert_equal ['150', '127', '156', '160', '134'], item_ids
-      assert_equal ['78031', '41702', '71340', '7196', '22546'], item_prices
+      assert_equal [134, 127, 160, 156, 150], item_ids
+      
     end
 
     def test_items__it_returns_an_empty_array_when_no_items_are_associated_with_the_invoice
-      input_data = ['23dfsdf4234', '246sdf11234234', '234sdf4234', 'success', '12342sdf4234', '234sdf234']
+      input_data = ['999999', '999999', '999999', 'success', '999999', '999999']
       invoice = Invoice.new(input_data, engine.invoice_repository)
 
       assert_equal [], invoice.items
     end
 
     def test_customer__it_can_pull_a_customer
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
       assert_equal Customer, invoice.customer.class
     end
 
     def test_customer__it_pulls_the_correct_customer
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal "Mariah", invoice.customer.first_name
     end
 
     def test_merchant__it_can_pull_a_merchant
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal Merchant, invoice.merchant.class
     end
 
     def test_merchant__it_pulls_the_correct_merchant
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
 
       assert_equal "Osinski, Pollich and Koelpin", invoice.merchant.name
     end
@@ -112,26 +114,16 @@ class InvoiceTest < MiniTest::Test
       assert_equal 0, invoice.revenue
     end
     def test__revenue__it_returns_a_big_decimal_when_given_a_valid_invoice
-      invoice = engine.invoice_repository.find_by(:id, '12')
+      invoice = engine.invoice_repository.find_by(:id, 12)
       assert_equal BigDecimal, invoice.revenue.class
     end
 
     def test__revenue__it_returns_the_correct_revenue
-      @id = input_data[0]
-      @invoice_id = input_data[1]
-      @credit_card_number = input_data[2]
-      @credit_card_expiration_date = input_data[3]
-      @result = input_data[4]
-      @created_at = input_data[5]
-      @updated_at = input_data[5]
-      @transaction_repository = transaction_repository
-      transaction1 = ['999997','23232323','098123098123',]
 
-
-      input_data = ['23232323','2412312312','2312314123','shipped','81231','123144']
+      input_data = ['23232323','2','2','shipped','81231','123144']
       invoice = Invoice.new(input_data, engine.invoice_repository)
 
-      assert_equal BigDecimal, invoice.revenue
+      assert_equal BigDecimal.new(0), invoice.revenue
     end
 
 end
